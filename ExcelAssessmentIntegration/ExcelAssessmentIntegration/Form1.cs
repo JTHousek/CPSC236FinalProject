@@ -17,7 +17,7 @@ namespace ExcelAssessmentIntegration
         {
             InitializeComponent();
         }
-        private void readExcelSheet(object sender, EventArgs e)
+        private void readExcelSheet(int filterType, string filterChoice)
         {
             //open excelApp and create the new application
             Excel.Application excelApp;
@@ -85,6 +85,11 @@ namespace ExcelAssessmentIntegration
 
 
 
+        }
+
+        private void ReadExcelBtn_Click(object sender, EventArgs e)
+        {
+            readExcelSheet(1, "2019");
         }
     }
 }
