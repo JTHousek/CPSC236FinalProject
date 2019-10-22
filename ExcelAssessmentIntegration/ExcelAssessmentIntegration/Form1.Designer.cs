@@ -29,15 +29,18 @@
         private void InitializeComponent()
         {
             this.filterCriteriaGrpBx = new System.Windows.Forms.GroupBox();
-            this.yearRB = new System.Windows.Forms.RadioButton();
-            this.semesterRB = new System.Windows.Forms.RadioButton();
-            this.courseRB = new System.Windows.Forms.RadioButton();
             this.sectionRB = new System.Windows.Forms.RadioButton();
+            this.courseRB = new System.Windows.Forms.RadioButton();
+            this.semesterRB = new System.Windows.Forms.RadioButton();
+            this.yearRB = new System.Windows.Forms.RadioButton();
             this.yearTBx = new System.Windows.Forms.TextBox();
             this.semesterCmBx = new System.Windows.Forms.ComboBox();
             this.courseCmBx = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.readExcelBtn = new System.Windows.Forms.Button();
+            this.filterLB = new System.Windows.Forms.Label();
+            this.filterBoxBx = new System.Windows.Forms.TextBox();
+            this.filterBtn = new System.Windows.Forms.Button();
             this.filterCriteriaGrpBx.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,39 +56,7 @@
             this.filterCriteriaGrpBx.TabIndex = 1;
             this.filterCriteriaGrpBx.TabStop = false;
             this.filterCriteriaGrpBx.Text = "Filter Criteria";
-            // 
-            // yearRB
-            // 
-            this.yearRB.AutoSize = true;
-            this.yearRB.Location = new System.Drawing.Point(7, 20);
-            this.yearRB.Name = "yearRB";
-            this.yearRB.Size = new System.Drawing.Size(47, 17);
-            this.yearRB.TabIndex = 0;
-            this.yearRB.TabStop = true;
-            this.yearRB.Text = "Year";
-            this.yearRB.UseVisualStyleBackColor = true;
-            // 
-            // semesterRB
-            // 
-            this.semesterRB.AutoSize = true;
-            this.semesterRB.Location = new System.Drawing.Point(7, 44);
-            this.semesterRB.Name = "semesterRB";
-            this.semesterRB.Size = new System.Drawing.Size(69, 17);
-            this.semesterRB.TabIndex = 1;
-            this.semesterRB.TabStop = true;
-            this.semesterRB.Text = "Semester";
-            this.semesterRB.UseVisualStyleBackColor = true;
-            // 
-            // courseRB
-            // 
-            this.courseRB.AutoSize = true;
-            this.courseRB.Location = new System.Drawing.Point(7, 68);
-            this.courseRB.Name = "courseRB";
-            this.courseRB.Size = new System.Drawing.Size(58, 17);
-            this.courseRB.TabIndex = 2;
-            this.courseRB.TabStop = true;
-            this.courseRB.Text = "Course";
-            this.courseRB.UseVisualStyleBackColor = true;
+            this.filterCriteriaGrpBx.Enter += new System.EventHandler(this.filterCriteriaGrpBx_Enter);
             // 
             // sectionRB
             // 
@@ -97,6 +68,43 @@
             this.sectionRB.TabStop = true;
             this.sectionRB.Text = "Section";
             this.sectionRB.UseVisualStyleBackColor = true;
+            this.sectionRB.CheckedChanged += new System.EventHandler(this.sectionRB_CheckedChanged);
+            // 
+            // courseRB
+            // 
+            this.courseRB.AutoSize = true;
+            this.courseRB.Location = new System.Drawing.Point(7, 68);
+            this.courseRB.Name = "courseRB";
+            this.courseRB.Size = new System.Drawing.Size(58, 17);
+            this.courseRB.TabIndex = 2;
+            this.courseRB.TabStop = true;
+            this.courseRB.Text = "Course";
+            this.courseRB.UseVisualStyleBackColor = true;
+            this.courseRB.CheckedChanged += new System.EventHandler(this.courseRB_CheckedChanged);
+            // 
+            // semesterRB
+            // 
+            this.semesterRB.AutoSize = true;
+            this.semesterRB.Location = new System.Drawing.Point(7, 44);
+            this.semesterRB.Name = "semesterRB";
+            this.semesterRB.Size = new System.Drawing.Size(69, 17);
+            this.semesterRB.TabIndex = 1;
+            this.semesterRB.TabStop = true;
+            this.semesterRB.Text = "Semester";
+            this.semesterRB.UseVisualStyleBackColor = true;
+            this.semesterRB.CheckedChanged += new System.EventHandler(this.semesterRB_CheckedChanged);
+            // 
+            // yearRB
+            // 
+            this.yearRB.AutoSize = true;
+            this.yearRB.Location = new System.Drawing.Point(7, 20);
+            this.yearRB.Name = "yearRB";
+            this.yearRB.Size = new System.Drawing.Size(47, 17);
+            this.yearRB.TabIndex = 0;
+            this.yearRB.TabStop = true;
+            this.yearRB.Text = "Year";
+            this.yearRB.UseVisualStyleBackColor = true;
+            this.yearRB.CheckedChanged += new System.EventHandler(this.yearRB_CheckedChanged);
             // 
             // yearTBx
             // 
@@ -157,11 +165,42 @@
             this.readExcelBtn.UseVisualStyleBackColor = true;
             this.readExcelBtn.Click += new System.EventHandler(this.ReadExcelBtn_Click);
             // 
+            // filterLB
+            // 
+            this.filterLB.AutoSize = true;
+            this.filterLB.Location = new System.Drawing.Point(30, 151);
+            this.filterLB.Name = "filterLB";
+            this.filterLB.Size = new System.Drawing.Size(35, 13);
+            this.filterLB.TabIndex = 7;
+            this.filterLB.Text = "label1";
+            this.filterLB.Visible = false;
+            // 
+            // filterBoxBx
+            // 
+            this.filterBoxBx.Location = new System.Drawing.Point(33, 168);
+            this.filterBoxBx.Name = "filterBoxBx";
+            this.filterBoxBx.Size = new System.Drawing.Size(100, 20);
+            this.filterBoxBx.TabIndex = 8;
+            this.filterBoxBx.Visible = false;
+            // 
+            // filterBtn
+            // 
+            this.filterBtn.Location = new System.Drawing.Point(19, 194);
+            this.filterBtn.Name = "filterBtn";
+            this.filterBtn.Size = new System.Drawing.Size(75, 23);
+            this.filterBtn.TabIndex = 9;
+            this.filterBtn.Text = "button1";
+            this.filterBtn.UseVisualStyleBackColor = true;
+            this.filterBtn.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.filterBtn);
+            this.Controls.Add(this.filterBoxBx);
+            this.Controls.Add(this.filterLB);
             this.Controls.Add(this.readExcelBtn);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.courseCmBx);
@@ -170,6 +209,7 @@
             this.Controls.Add(this.filterCriteriaGrpBx);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.filterCriteriaGrpBx.ResumeLayout(false);
             this.filterCriteriaGrpBx.PerformLayout();
             this.ResumeLayout(false);
@@ -189,6 +229,9 @@
         private System.Windows.Forms.ComboBox courseCmBx;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button readExcelBtn;
+        private System.Windows.Forms.Label filterLB;
+        private System.Windows.Forms.TextBox filterBoxBx;
+        private System.Windows.Forms.Button filterBtn;
     }
 }
 

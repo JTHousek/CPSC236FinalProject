@@ -91,6 +91,123 @@ namespace ExcelAssessmentIntegration
         {
             readExcelSheet(1, "2019");
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void filterCriteriaGrpBx_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void yearRB_CheckedChanged(object sender, EventArgs e)
+        {
+            int filterType = 1;
+            if (yearRB.Checked == true)
+            {
+                MessageBox.Show("WorksYears");
+            }
+
+            showFilters();
+            //filterData(filterType);
+        }
+
+        private void semesterRB_CheckedChanged(object sender, EventArgs e)
+        {
+            int filterType = 2;
+
+            if (semesterRB.Checked == true)
+            {
+                MessageBox.Show("WorksSem");
+            }
+
+            showFilters();
+            //filterData(filterType);
+        }
+
+        private void courseRB_CheckedChanged(object sender, EventArgs e)
+        {
+            int filterType = 3;
+
+            if (courseRB.Checked == true)
+            {
+                MessageBox.Show("WorksCour");
+            }
+
+            showFilters();
+            //filterData(filterType);
+        }
+
+        private void sectionRB_CheckedChanged(object sender, EventArgs e)
+        {
+            int filterType = 4;
+
+            if (sectionRB.Checked == true)
+            {
+                MessageBox.Show("WorksSecti");
+            }
+
+            showFilters();
+           // filterData(filterType);
+        }
+
+        public void filterData(int filterCriteria)
+        {
+            const int LOWESTYEAR = 1950;
+            const int HIGHESTYEAR = 3000;
+
+            String getValue;
+            int convertVal;
+
+
+            getValue = filterBoxBx.Text.Trim();
+
+            if (getValue == "")
+            {
+                MessageBox.Show("Please enter a value in the box");
+                filterBoxBx.Clear();
+            }
+
+            switch (filterCriteria)
+            {
+                case 1:
+                    if (int.TryParse(getValue, out convertVal))
+                    {
+                        if (convertVal > LOWESTYEAR || convertVal < HIGHESTYEAR)
+                        {
+                            //Do filtering here
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter a valid year to search between 1950 and 3000");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Value is not a number. Please enter a year into the box");
+                        filterBoxBx.Clear();
+                    }
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void showFilters()
+        {
+            filterLB.Visible = true;
+            filterBoxBx.Visible = true;
+            filterBtn.Visible = true;
+        }
     }
 }
 
