@@ -92,15 +92,6 @@ namespace ExcelAssessmentIntegration
             readExcelSheet(1, "2019");
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void filterCriteriaGrpBx_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         private void yearRB_CheckedChanged(object sender, EventArgs e)
         {
