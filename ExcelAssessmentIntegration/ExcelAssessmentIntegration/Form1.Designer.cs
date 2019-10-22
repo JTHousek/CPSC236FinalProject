@@ -56,7 +56,6 @@
             this.filterCriteriaGrpBx.TabIndex = 1;
             this.filterCriteriaGrpBx.TabStop = false;
             this.filterCriteriaGrpBx.Text = "Filter Criteria";
-            this.filterCriteriaGrpBx.Enter += new System.EventHandler(this.filterCriteriaGrpBx_Enter);
             // 
             // sectionRB
             // 
@@ -209,7 +208,6 @@
             this.Controls.Add(this.filterCriteriaGrpBx);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.filterCriteriaGrpBx.ResumeLayout(false);
             this.filterCriteriaGrpBx.PerformLayout();
             this.ResumeLayout(false);
