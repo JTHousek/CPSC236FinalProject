@@ -14,6 +14,7 @@ namespace ExcelAssessmentIntegration
 {
     public partial class Form1 : Form
     {
+        System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); //CHANGE DIRECTORY LOCATION???????????
         public Form1()
         {
             InitializeComponent();
@@ -37,7 +38,10 @@ namespace ExcelAssessmentIntegration
             //make excel visible to the user
             excelApp.Visible = true;
 
-            string workbookPath = ""; //PATH NEEDS TO BE ADDED/MANIPULATED
+
+            string workbookPath = "H:\\College Work\\ExcelAssessmentIntegration\\CPSC236FinalProject\\ExcelAssessmentIntegration\\ExcelAssessmentIntegration\\bin\\dataSheets\\" + sheetPath;
+            MessageBox.Show(workbookPath);
+
             try
             {
                 excelWorkbook = excelApp.Workbooks.Open(workbookPath,
@@ -93,7 +97,6 @@ namespace ExcelAssessmentIntegration
             int filterType = 0;
             int i = 0;
 
-            System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); //CHANGE DIRECTORY LOCATION???????????
             int filesCount = dataFilesDir.GetFiles().Length;
             MessageBox.Show(filesCount.ToString());
 
@@ -126,71 +129,16 @@ namespace ExcelAssessmentIntegration
                         {
                             if (file.Name.Substring(0, 2) == "19")
                             {
-                                MessageBox.Show(file.Name);
+                                readExcelSheet(file.Name);
                             }
                         }
-                        
                     }
                     break;
             }
 
         }
 
-        public void filterData(int filterCriteria)
-        {
-            const int LOWESTYEAR = 1950;
-            const int HIGHESTYEAR = 3000;
 
-            String getValue;
-            int convertVal;
-
-
-            getValue = filterBoxBx.Text.Trim();
-
-            if (getValue == "")
-            {
-                MessageBox.Show("Please enter a value in the box");
-                filterBoxBx.Clear();
-            }
-
-            switch (filterCriteria)
-            {
-                case 1:
-                    if (int.TryParse(getValue, out convertVal))
-                    {
-                        if (convertVal > LOWESTYEAR || convertVal < HIGHESTYEAR)
-                        {
-                            //Do filtering here
-                        }
-                        else
-                        {
-                            MessageBox.Show("Please enter a valid year to search between 1950 and 3000");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Value is not a number. Please enter a year into the box");
-                        filterBoxBx.Clear();
-                    }
-
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void showFilters()
-        {
-            filterLB.Visible = true;
-            filterBoxBx.Visible = true;
-            filterBtn.Visible = true;
-        }
     }
 }
 
