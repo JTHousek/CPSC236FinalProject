@@ -38,9 +38,6 @@
             this.courseCmBx = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.readExcelBtn = new System.Windows.Forms.Button();
-            this.filterLB = new System.Windows.Forms.Label();
-            this.filterBoxBx = new System.Windows.Forms.TextBox();
-            this.filterBtn = new System.Windows.Forms.Button();
             this.filterCriteriaGrpBx.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,42 +157,11 @@
             this.readExcelBtn.UseVisualStyleBackColor = true;
             this.readExcelBtn.Click += new System.EventHandler(this.ReadExcelBtn_Click);
             // 
-            // filterLB
-            // 
-            this.filterLB.AutoSize = true;
-            this.filterLB.Location = new System.Drawing.Point(30, 151);
-            this.filterLB.Name = "filterLB";
-            this.filterLB.Size = new System.Drawing.Size(35, 13);
-            this.filterLB.TabIndex = 7;
-            this.filterLB.Text = "label1";
-            this.filterLB.Visible = false;
-            // 
-            // filterBoxBx
-            // 
-            this.filterBoxBx.Location = new System.Drawing.Point(33, 168);
-            this.filterBoxBx.Name = "filterBoxBx";
-            this.filterBoxBx.Size = new System.Drawing.Size(100, 20);
-            this.filterBoxBx.TabIndex = 8;
-            this.filterBoxBx.Visible = false;
-            // 
-            // filterBtn
-            // 
-            this.filterBtn.Location = new System.Drawing.Point(19, 194);
-            this.filterBtn.Name = "filterBtn";
-            this.filterBtn.Size = new System.Drawing.Size(75, 23);
-            this.filterBtn.TabIndex = 9;
-            this.filterBtn.Text = "button1";
-            this.filterBtn.UseVisualStyleBackColor = true;
-            this.filterBtn.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.filterBtn);
-            this.Controls.Add(this.filterBoxBx);
-            this.Controls.Add(this.filterLB);
             this.Controls.Add(this.readExcelBtn);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.courseCmBx);
@@ -223,9 +189,6 @@
         private System.Windows.Forms.ComboBox courseCmBx;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button readExcelBtn;
-        private System.Windows.Forms.Label filterLB;
-        private System.Windows.Forms.TextBox filterBoxBx;
-        private System.Windows.Forms.Button filterBtn;
     }
 }
 
