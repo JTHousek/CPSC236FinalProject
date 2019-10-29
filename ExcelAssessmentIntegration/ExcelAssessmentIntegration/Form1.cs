@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,11 +14,12 @@ namespace ExcelAssessmentIntegration
 {
     public partial class Form1 : Form
     {
+        System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); //CHANGE DIRECTORY LOCATION???????????
         public Form1()
         {
             InitializeComponent();
         }
-        private void readExcelSheet(int filterType, string filterChoice)
+        private void readExcelSheet(string sheetPath)
         {
             //open excelApp and create the new application
             Excel.Application excelApp;
@@ -36,7 +38,10 @@ namespace ExcelAssessmentIntegration
             //make excel visible to the user
             excelApp.Visible = true;
 
-            string workbookPath = ""; //PATH NEEDS TO BE ADDED/MANIPULATED
+            //change dfsdf
+            string workbookPath = "H:\\College Work\\ExcelAssessmentIntegration\\CPSC236FinalProject\\ExcelAssessmentIntegration\\ExcelAssessmentIntegration\\bin\\dataSheets\\" + sheetPath;
+            MessageBox.Show(workbookPath);
+
             try
             {
                 excelWorkbook = excelApp.Workbooks.Open(workbookPath,
@@ -92,7 +97,6 @@ namespace ExcelAssessmentIntegration
             int filterType = 0;
             int i = 0;
 
-            System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); //CHANGE DIRECTORY LOCATION???????????
             int filesCount = dataFilesDir.GetFiles().Length;
             MessageBox.Show(filesCount.ToString());
 
@@ -120,14 +124,20 @@ namespace ExcelAssessmentIntegration
                 case 2: //filter by year
                     for (i = 0; i < filesCount; i++)
                     {
-
+                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+                        foreach (FileInfo file in Files)
+                        {
+                            if (file.Name.Substring(0, 2) == "19")
+                            {
+                                readExcelSheet(file.Name);
+                            }
+                        }
                     }
                     break;
             }
 
         }
 
-       
+
     }
 }
-
