@@ -37,9 +37,10 @@ namespace ExcelAssessmentIntegration
 
             //make excel visible to the user
             excelApp.Visible = true;
+            String path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
             //change
-            string workbookPath = "H:\\College Work\\ExcelAssessmentIntegration\\CPSC236FinalProject\\ExcelAssessmentIntegration\\ExcelAssessmentIntegration\\bin\\dataSheets\\" + sheetPath;
+            string workbookPath = path + "\\bin\\dataSheets\\" + sheetPath;
             MessageBox.Show(workbookPath);
 
             try
@@ -71,7 +72,7 @@ namespace ExcelAssessmentIntegration
                         if (range.Cells[rowCount, colCount].Value2 != null)
                         {
                             str = range.Cells[rowCount, colCount].Value2.ToString();
-                            Console.WriteLine("Value in cell " + rowCount + " " + colCount + " is " + str); //print each individual cell
+                            MessageBox.Show("Value in cell " + rowCount + " " + colCount + " is " + str); //print each individual cell
                         }
 
                     }
