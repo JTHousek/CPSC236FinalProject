@@ -127,61 +127,7 @@ namespace ExcelAssessmentIntegration
 
         }
 
-        public void filterData(int filterCriteria)
-        {
-            const int LOWESTYEAR = 1950;
-            const int HIGHESTYEAR = 3000;
-
-            String getValue;
-            int convertVal;
-
-
-            getValue = filterBoxBx.Text.Trim();
-
-            if (getValue == "")
-            {
-                MessageBox.Show("Please enter a value in the box");
-                filterBoxBx.Clear();
-            }
-
-            switch (filterCriteria)
-            {
-                case 1:
-                    if (int.TryParse(getValue, out convertVal))
-                    {
-                        if (convertVal > LOWESTYEAR || convertVal < HIGHESTYEAR)
-                        {
-                            //Do filtering here
-                        }
-                        else
-                        {
-                            MessageBox.Show("Please enter a valid year to search between 1950 and 3000");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Value is not a number. Please enter a year into the box");
-                        filterBoxBx.Clear();
-                    }
-
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void showFilters()
-        {
-            filterLB.Visible = true;
-            filterBoxBx.Visible = true;
-            filterBtn.Visible = true;
-        }
+       
     }
 }
 
