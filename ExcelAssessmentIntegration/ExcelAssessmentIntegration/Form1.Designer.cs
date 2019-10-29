@@ -67,7 +67,6 @@
             this.sectionRB.TabStop = true;
             this.sectionRB.Text = "Section";
             this.sectionRB.UseVisualStyleBackColor = true;
-            this.sectionRB.CheckedChanged += new System.EventHandler(this.sectionRB_CheckedChanged);
             // 
             // courseRB
             // 
@@ -79,7 +78,6 @@
             this.courseRB.TabStop = true;
             this.courseRB.Text = "Course";
             this.courseRB.UseVisualStyleBackColor = true;
-            this.courseRB.CheckedChanged += new System.EventHandler(this.courseRB_CheckedChanged);
             // 
             // semesterRB
             // 
@@ -91,7 +89,6 @@
             this.semesterRB.TabStop = true;
             this.semesterRB.Text = "Semester";
             this.semesterRB.UseVisualStyleBackColor = true;
-            this.semesterRB.CheckedChanged += new System.EventHandler(this.semesterRB_CheckedChanged);
             // 
             // yearRB
             // 
@@ -103,7 +100,6 @@
             this.yearRB.TabStop = true;
             this.yearRB.Text = "Year";
             this.yearRB.UseVisualStyleBackColor = true;
-            this.yearRB.CheckedChanged += new System.EventHandler(this.yearRB_CheckedChanged);
             // 
             // yearTBx
             // 
