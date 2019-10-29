@@ -89,59 +89,42 @@ namespace ExcelAssessmentIntegration
 
         private void ReadExcelBtn_Click(object sender, EventArgs e)
         {
-            readExcelSheet(1, "2019");
-        }
+            int filterType = 0;
+            int i = 0;
 
+            System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); //CHANGE DIRECTORY LOCATION???????????
+            int filesCount = dataFilesDir.GetFiles().Length;
+            MessageBox.Show(filesCount.ToString());
 
-        private void yearRB_CheckedChanged(object sender, EventArgs e)
-        {
-            int filterType = 1;
-            if (yearRB.Checked == true)
+            if (yearRB.Checked)
             {
-                MessageBox.Show("WorksYears");
+                filterType = 2;
+            }
+            if (semesterRB.Checked)
+            {
+                filterType = 3;
+            }
+            if (courseRB.Checked)
+            {
+                filterType = 4;
+            }
+            if (sectionRB.Checked)
+            {
+                filterType = 5;
             }
 
-            showFilters();
-            //filterData(filterType);
-        }
-
-        private void semesterRB_CheckedChanged(object sender, EventArgs e)
-        {
-            int filterType = 2;
-
-            if (semesterRB.Checked == true)
+            switch (filterType)
             {
-                MessageBox.Show("WorksSem");
+                case 1: //filter by nothing
+                    break;
+                case 2: //filter by year
+                    for (i = 0; i < filesCount; i++)
+                    {
+
+                    }
+                    break;
             }
 
-            showFilters();
-            //filterData(filterType);
-        }
-
-        private void courseRB_CheckedChanged(object sender, EventArgs e)
-        {
-            int filterType = 3;
-
-            if (courseRB.Checked == true)
-            {
-                MessageBox.Show("WorksCour");
-            }
-
-            showFilters();
-            //filterData(filterType);
-        }
-
-        private void sectionRB_CheckedChanged(object sender, EventArgs e)
-        {
-            int filterType = 4;
-
-            if (sectionRB.Checked == true)
-            {
-                MessageBox.Show("WorksSecti");
-            }
-
-            showFilters();
-           // filterData(filterType);
         }
 
         public void filterData(int filterCriteria)
