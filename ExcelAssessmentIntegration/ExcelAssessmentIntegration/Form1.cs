@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +18,7 @@ namespace ExcelAssessmentIntegration
         {
             InitializeComponent();
         }
-        private void readExcelSheet(int filterType, string filterChoice)
+        private void readExcelSheet(string sheetPath)
         {
             //open excelApp and create the new application
             Excel.Application excelApp;
@@ -120,7 +121,15 @@ namespace ExcelAssessmentIntegration
                 case 2: //filter by year
                     for (i = 0; i < filesCount; i++)
                     {
-
+                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+                        foreach (FileInfo file in Files)
+                        {
+                            if (file.Name.Substring(0, 2) == "19")
+                            {
+                                MessageBox.Show(file.Name);
+                            }
+                        }
+                        
                     }
                     break;
             }
