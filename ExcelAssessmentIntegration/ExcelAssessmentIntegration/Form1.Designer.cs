@@ -36,7 +36,7 @@
             this.yearTBx = new System.Windows.Forms.TextBox();
             this.semesterCmBx = new System.Windows.Forms.ComboBox();
             this.courseCmBx = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.sectionCmBx = new System.Windows.Forms.ComboBox();
             this.readExcelBtn = new System.Windows.Forms.Button();
             this.filterCriteriaGrpBx.SuspendLayout();
             this.SuspendLayout();
@@ -101,6 +101,7 @@
             // yearTBx
             // 
             this.yearTBx.Location = new System.Drawing.Point(136, 29);
+            this.yearTBx.MaxLength = 2;
             this.yearTBx.Name = "yearTBx";
             this.yearTBx.Size = new System.Drawing.Size(100, 20);
             this.yearTBx.TabIndex = 2;
@@ -139,13 +140,13 @@
             this.courseCmBx.Size = new System.Drawing.Size(121, 21);
             this.courseCmBx.TabIndex = 4;
             // 
-            // comboBox3
+            // sectionCmBx
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(566, 28);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 5;
+            this.sectionCmBx.FormattingEnabled = true;
+            this.sectionCmBx.Location = new System.Drawing.Point(566, 28);
+            this.sectionCmBx.Name = "sectionCmBx";
+            this.sectionCmBx.Size = new System.Drawing.Size(121, 21);
+            this.sectionCmBx.TabIndex = 5;
             // 
             // readExcelBtn
             // 
@@ -163,13 +164,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.readExcelBtn);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.sectionCmBx);
             this.Controls.Add(this.courseCmBx);
             this.Controls.Add(this.semesterCmBx);
             this.Controls.Add(this.yearTBx);
             this.Controls.Add(this.filterCriteriaGrpBx);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Excel Integration Assessment";
             this.filterCriteriaGrpBx.ResumeLayout(false);
             this.filterCriteriaGrpBx.PerformLayout();
             this.ResumeLayout(false);
@@ -187,7 +188,7 @@
         private System.Windows.Forms.TextBox yearTBx;
         private System.Windows.Forms.ComboBox semesterCmBx;
         private System.Windows.Forms.ComboBox courseCmBx;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox sectionCmBx;
         private System.Windows.Forms.Button readExcelBtn;
     }
 }

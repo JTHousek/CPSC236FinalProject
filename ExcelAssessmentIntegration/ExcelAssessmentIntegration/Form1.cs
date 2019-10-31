@@ -98,6 +98,7 @@ namespace ExcelAssessmentIntegration
             int filterType = 0;
             int i = 0;
 
+            String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
             MessageBox.Show(filesCount.ToString());
 
@@ -128,7 +129,50 @@ namespace ExcelAssessmentIntegration
                         FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
                         foreach (FileInfo file in Files)
                         {
-                            if (file.Name.Substring(0, 2) == "19")
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[0] == yearTBx.Text)
+                            {
+                                readExcelSheet(file.Name);
+                            }
+                        }
+                    }
+                    break;
+                case 3: //filter by semester
+                    for (i = 0; i < filesCount; i++)
+                    {
+                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+                        foreach (FileInfo file in Files)
+                        {
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[1] == semesterCmBx.SelectedItem)
+                            {
+                                readExcelSheet(file.Name);
+                            }
+                        }
+                    }
+                    break;
+                case 4: //filter by course
+                    for (i = 0; i < filesCount; i++)
+                    {
+                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+                        foreach (FileInfo file in Files)
+                        {
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[2] == courseCmBx.SelectedItem)
+                            {
+                                readExcelSheet(file.Name);
+                            }
+                        }
+                    }
+                    break;
+                case 5: //filter by year
+                    for (i = 0; i < filesCount; i++)
+                    {
+                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+                        foreach (FileInfo file in Files)
+                        {
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[3] == sectionCmBx.SelectedItem)
                             {
                                 readExcelSheet(file.Name);
                             }
