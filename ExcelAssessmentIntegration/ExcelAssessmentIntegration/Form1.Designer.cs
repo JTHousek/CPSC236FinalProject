@@ -1,6 +1,6 @@
 ﻿namespace ExcelAssessmentIntegration
 {
-    partial class Form1
+    partial class ExcelIntegrationAssessmentWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExcelIntegrationAssessmentWindow));
             this.filterCriteriaGrpBx = new System.Windows.Forms.GroupBox();
             this.sectionRB = new System.Windows.Forms.RadioButton();
             this.courseRB = new System.Windows.Forms.RadioButton();
@@ -38,6 +39,7 @@
             this.courseCmBx = new System.Windows.Forms.ComboBox();
             this.sectionCmBx = new System.Windows.Forms.ComboBox();
             this.readExcelBtn = new System.Windows.Forms.Button();
+            this.cancelBtn = new System.Windows.Forms.Button();
             this.filterCriteriaGrpBx.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +66,7 @@
             this.sectionRB.TabStop = true;
             this.sectionRB.Text = "Section";
             this.sectionRB.UseVisualStyleBackColor = true;
+            this.sectionRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
             // 
             // courseRB
             // 
@@ -75,6 +78,7 @@
             this.courseRB.TabStop = true;
             this.courseRB.Text = "Course";
             this.courseRB.UseVisualStyleBackColor = true;
+            this.courseRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
             // 
             // semesterRB
             // 
@@ -86,6 +90,7 @@
             this.semesterRB.TabStop = true;
             this.semesterRB.Text = "Semester";
             this.semesterRB.UseVisualStyleBackColor = true;
+            this.semesterRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
             // 
             // yearRB
             // 
@@ -97,6 +102,7 @@
             this.yearRB.TabStop = true;
             this.yearRB.Text = "Year";
             this.yearRB.UseVisualStyleBackColor = true;
+            this.yearRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
             // 
             // yearTBx
             // 
@@ -150,7 +156,8 @@
             // 
             // readExcelBtn
             // 
-            this.readExcelBtn.Location = new System.Drawing.Point(338, 98);
+            this.readExcelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.readExcelBtn.Location = new System.Drawing.Point(418, 98);
             this.readExcelBtn.Name = "readExcelBtn";
             this.readExcelBtn.Size = new System.Drawing.Size(136, 23);
             this.readExcelBtn.TabIndex = 6;
@@ -158,18 +165,34 @@
             this.readExcelBtn.UseVisualStyleBackColor = true;
             this.readExcelBtn.Click += new System.EventHandler(this.ReadExcelBtn_Click);
             // 
-            // Form1
+            // cancelBtn
             // 
+            this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelBtn.Location = new System.Drawing.Point(250, 98);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(121, 23);
+            this.cancelBtn.TabIndex = 7;
+            this.cancelBtn.Text = "Cancel";
+            this.cancelBtn.UseVisualStyleBackColor = true;
+            this.cancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
+            // 
+            // ExcelIntegrationAssessmentWindow
+            // 
+            this.AcceptButton = this.readExcelBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.CancelButton = this.cancelBtn;
+            this.ClientSize = new System.Drawing.Size(731, 450);
+            this.ControlBox = false;
+            this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.readExcelBtn);
             this.Controls.Add(this.sectionCmBx);
             this.Controls.Add(this.courseCmBx);
             this.Controls.Add(this.semesterCmBx);
             this.Controls.Add(this.yearTBx);
             this.Controls.Add(this.filterCriteriaGrpBx);
-            this.Name = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "ExcelIntegrationAssessmentWindow";
             this.Text = "Excel Integration Assessment";
             this.filterCriteriaGrpBx.ResumeLayout(false);
             this.filterCriteriaGrpBx.PerformLayout();
@@ -190,6 +213,7 @@
         private System.Windows.Forms.ComboBox courseCmBx;
         private System.Windows.Forms.ComboBox sectionCmBx;
         private System.Windows.Forms.Button readExcelBtn;
+        private System.Windows.Forms.Button cancelBtn;
     }
 }
 
