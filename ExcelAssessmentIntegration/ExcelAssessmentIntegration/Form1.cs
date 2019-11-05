@@ -14,7 +14,7 @@ namespace ExcelAssessmentIntegration
 {
     public partial class ExcelIntegrationAssessmentWindow : Form
     {
-        System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); //CHANGE DIRECTORY LOCATION???????????
+        System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); 
         public ExcelIntegrationAssessmentWindow()
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace ExcelAssessmentIntegration
 
             //change
             string workbookPath = path + "\\bin\\dataSheets\\" + sheetPath;
-            MessageBox.Show(workbookPath);
+            //MessageBox.Show(workbookPath);
 
             try
             {
@@ -72,7 +72,8 @@ namespace ExcelAssessmentIntegration
                         if (range.Cells[rowCount, colCount].Value2 != null)
                         {
                             str = range.Cells[rowCount, colCount].Value2.ToString();
-                            MessageBox.Show("Value in cell " + rowCount + " " + colCount + " is " + str); //print each individual cell
+                            pullDataIntoArray(str, colCount);
+                            //MessageBox.Show("Value in cell " + rowCount + " " + colCount + " is " + str); //print each individual cell
                         }
 
                     }
@@ -88,19 +89,17 @@ namespace ExcelAssessmentIntegration
             {
                 MessageBox.Show("ERROR: FILE NOT READ");
             }
-
-
-
         }
 
         private void ReadExcelBtn_Click(object sender, EventArgs e)
         {
             int filterType = 0;
             int i = 0;
+            int convertYear = 0;
 
             String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
-            MessageBox.Show(filesCount.ToString());
+            //MessageBox.Show(filesCount.ToString());
 
             if (noneRB.Checked)
             {
@@ -123,38 +122,37 @@ namespace ExcelAssessmentIntegration
                 filterType = 5;
             }
 
+            FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+
             switch (filterType)
             {
-                case 1: //filter by nothing
-                    for (i = 0; i < filesCount; i++)
+                case 1: //filter by nothing    
+                    
+                    foreach (FileInfo file in Files)
                     {
-                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
-                        foreach (FileInfo file in Files)
-                        {
-                            readExcelSheet(file.Name);  
-                        }
+                        readExcelSheet(file.Name);  
                     }
+                    
                     break;
 
-                case 2: //filter by year
-                    for (i = 0; i < filesCount; i++)
+                case 2: //filter by year 
+
+                    if (Int32.TryParse(yearTBx.Text.Trim(), out convertYear))
                     {
-                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
                         foreach (FileInfo file in Files)
                         {
                             delimitedFileName = file.Name.Split('_');
                             try
                             {
-                                if (Int32.TryParse(yearTBx.Text, out int x))
+
+                                if (convertYear >= 00 && convertYear <= 99)
                                 {
-                                    if (x >= 00 && x <= 99);
+                                    if (delimitedFileName[0] == yearTBx.Text)
                                     {
-                                        if (delimitedFileName[0] == yearTBx.Text)
-                                        {
-                                            readExcelSheet(file.Name);
-                                        }
+                                        readExcelSheet(file.Name);
                                     }
                                 }
+
                             }
                             catch (Exception)
                             {
@@ -162,48 +160,52 @@ namespace ExcelAssessmentIntegration
                             }
                         }
                     }
+                    else
+                    {
+                        consoleOutputTxB.Visible = true;
+                        consoleBxLB.Visible = true;
+
+                        consoleOutputTxB.AppendText("Value is not an integer. Please reenter the value \n");
+                    }
+
+                    
+                    
                     break;
                 case 3: //filter by semester
-                    for (i = 0; i < filesCount; i++)
+                   
+                    foreach (FileInfo file in Files)
                     {
-                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
-                        foreach (FileInfo file in Files)
+                        delimitedFileName = file.Name.Split('_');
+                        if (delimitedFileName[1] == (string) semesterCmBx.SelectedItem)
                         {
-                            delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[1] == (string) semesterCmBx.SelectedItem)
-                            {
-                                readExcelSheet(file.Name);
-                            }
+                            readExcelSheet(file.Name);
                         }
                     }
+                    
                     break;
                 case 4: //filter by course
-                    for (i = 0; i < filesCount; i++)
+                    
+                    foreach (FileInfo file in Files)
                     {
-                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
-                        foreach (FileInfo file in Files)
+                        delimitedFileName = file.Name.Split('_');
+                        if (delimitedFileName[2] == (string) courseCmBx.SelectedItem)
                         {
-                            delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[2] == (string) courseCmBx.SelectedItem)
-                            {
-                                readExcelSheet(file.Name);
-                            }
+                            readExcelSheet(file.Name);
                         }
                     }
+                    
                     break;
                 case 5: //filter by year
-                    for (i = 0; i < filesCount; i++)
+                    
+                    foreach (FileInfo file in Files)
                     {
-                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
-                        foreach (FileInfo file in Files)
+                        delimitedFileName = file.Name.Split('_');
+                        if (delimitedFileName[3] == (string) sectionCmBx.SelectedItem)
                         {
-                            delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[3] == (string) sectionCmBx.SelectedItem)
-                            {
-                                readExcelSheet(file.Name);
-                            }
+                            readExcelSheet(file.Name);
                         }
                     }
+                    
                     break;
             }
 
@@ -247,9 +249,19 @@ namespace ExcelAssessmentIntegration
 
         }
 
-        private void semesterCmBx_SelectedIndexChanged(object sender, EventArgs e)
+        private void pullDataIntoArray(String excelInfoGet, int indexAtPass)
         {
-
+            switch(excelInfoGet)
+            {
+                case "objective1":
+                    break;
+                case "objective2":
+                    break;
+                case "objective3":
+                    break;              
+                default:
+                    break;
+            }
         }
     }
 }

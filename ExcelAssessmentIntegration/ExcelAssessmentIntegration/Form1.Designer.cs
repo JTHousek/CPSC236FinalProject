@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExcelIntegrationAssessmentWindow));
             this.filterCriteriaGrpBx = new System.Windows.Forms.GroupBox();
+            this.noneRB = new System.Windows.Forms.RadioButton();
             this.sectionRB = new System.Windows.Forms.RadioButton();
             this.courseRB = new System.Windows.Forms.RadioButton();
             this.semesterRB = new System.Windows.Forms.RadioButton();
@@ -44,7 +45,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.noneRB = new System.Windows.Forms.RadioButton();
+            this.consoleBoxLB = new System.Windows.Forms.Label();
+            this.consoleBxLB = new System.Windows.Forms.Label();
+            this.consoleOutputTxB = new System.Windows.Forms.TextBox();
             this.filterCriteriaGrpBx.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +64,17 @@
             this.filterCriteriaGrpBx.TabIndex = 1;
             this.filterCriteriaGrpBx.TabStop = false;
             this.filterCriteriaGrpBx.Text = "Filter Criteria";
+            // 
+            // noneRB
+            // 
+            this.noneRB.AutoSize = true;
+            this.noneRB.Location = new System.Drawing.Point(6, 28);
+            this.noneRB.Name = "noneRB";
+            this.noneRB.Size = new System.Drawing.Size(51, 17);
+            this.noneRB.TabIndex = 4;
+            this.noneRB.TabStop = true;
+            this.noneRB.Text = "None";
+            this.noneRB.UseVisualStyleBackColor = true;
             // 
             // sectionRB
             // 
@@ -130,7 +144,6 @@
             this.semesterCmBx.Name = "semesterCmBx";
             this.semesterCmBx.Size = new System.Drawing.Size(121, 21);
             this.semesterCmBx.TabIndex = 3;
-            this.semesterCmBx.SelectedIndexChanged += new System.EventHandler(this.semesterCmBx_SelectedIndexChanged);
             // 
             // courseCmBx
             // 
@@ -225,16 +238,31 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Section";
             // 
-            // noneRB
+            // consoleBoxLB
             // 
-            this.noneRB.AutoSize = true;
-            this.noneRB.Location = new System.Drawing.Point(6, 28);
-            this.noneRB.Name = "noneRB";
-            this.noneRB.Size = new System.Drawing.Size(51, 17);
-            this.noneRB.TabIndex = 4;
-            this.noneRB.TabStop = true;
-            this.noneRB.Text = "None";
-            this.noneRB.UseVisualStyleBackColor = true;
+            this.consoleBoxLB.Location = new System.Drawing.Point(0, 0);
+            this.consoleBoxLB.Name = "consoleBoxLB";
+            this.consoleBoxLB.Size = new System.Drawing.Size(100, 23);
+            this.consoleBoxLB.TabIndex = 16;
+            // 
+            // consoleBxLB
+            // 
+            this.consoleBxLB.AutoSize = true;
+            this.consoleBxLB.Location = new System.Drawing.Point(674, 129);
+            this.consoleBxLB.Name = "consoleBxLB";
+            this.consoleBxLB.Size = new System.Drawing.Size(45, 13);
+            this.consoleBxLB.TabIndex = 17;
+            this.consoleBxLB.Text = "Console";
+            this.consoleBxLB.Visible = false;
+            // 
+            // consoleOutputTxB
+            // 
+            this.consoleOutputTxB.Location = new System.Drawing.Point(482, 145);
+            this.consoleOutputTxB.Multiline = true;
+            this.consoleOutputTxB.Name = "consoleOutputTxB";
+            this.consoleOutputTxB.Size = new System.Drawing.Size(237, 53);
+            this.consoleOutputTxB.TabIndex = 18;
+            this.consoleOutputTxB.Visible = false;
             // 
             // ExcelIntegrationAssessmentWindow
             // 
@@ -244,6 +272,9 @@
             this.CancelButton = this.cancelBtn;
             this.ClientSize = new System.Drawing.Size(731, 210);
             this.ControlBox = false;
+            this.Controls.Add(this.consoleOutputTxB);
+            this.Controls.Add(this.consoleBxLB);
+            this.Controls.Add(this.consoleBoxLB);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -283,6 +314,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton noneRB;
+        private System.Windows.Forms.Label consoleBoxLB;
+        private System.Windows.Forms.Label consoleBxLB;
+        private System.Windows.Forms.TextBox consoleOutputTxB;
     }
 }
 
