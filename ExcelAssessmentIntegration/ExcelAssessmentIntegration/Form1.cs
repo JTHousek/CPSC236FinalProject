@@ -122,7 +122,19 @@ namespace ExcelAssessmentIntegration
             switch (filterType)
             {
                 case 1: //filter by nothing
+                    for (i = 0; i < filesCount; i++)
+                    {
+                        FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+                        foreach (FileInfo file in Files)
+                        {
+                            if (Int32.TryParse(yearTBx.Text, out int x))
+                            {
+                                readExcelSheet(file.Name);
+                            }
+                        }
+                    }
                     break;
+
                 case 2: //filter by year
                     for (i = 0; i < filesCount; i++)
                     {
@@ -130,9 +142,22 @@ namespace ExcelAssessmentIntegration
                         foreach (FileInfo file in Files)
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearTBx.Text)
+                            try
                             {
-                                readExcelSheet(file.Name);
+                                if (Int32.TryParse(yearTBx.Text, out int x))
+                                {
+                                    if (x >= 00 && x <= 99);
+                                    {
+                                        if (delimitedFileName[0] == yearTBx.Text)
+                                        {
+                                            readExcelSheet(file.Name);
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("ERROR: Invalid Year Entry");
                             }
                         }
                     }
@@ -218,6 +243,11 @@ namespace ExcelAssessmentIntegration
                 courseCmBx.Enabled = true;
                 sectionCmBx.Enabled = true;
             }
+
+        }
+
+        private void semesterCmBx_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
