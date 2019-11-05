@@ -170,7 +170,7 @@ namespace ExcelAssessmentIntegration
                         foreach (FileInfo file in Files)
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[1] == semesterCmBx.SelectedItem)
+                            if (delimitedFileName[1] == (string) semesterCmBx.SelectedItem)
                             {
                                 readExcelSheet(file.Name);
                             }
@@ -184,7 +184,7 @@ namespace ExcelAssessmentIntegration
                         foreach (FileInfo file in Files)
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[2] == courseCmBx.SelectedItem)
+                            if (delimitedFileName[2] == (string) courseCmBx.SelectedItem)
                             {
                                 readExcelSheet(file.Name);
                             }
@@ -198,7 +198,7 @@ namespace ExcelAssessmentIntegration
                         foreach (FileInfo file in Files)
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[3] == sectionCmBx.SelectedItem)
+                            if (delimitedFileName[3] == (string) sectionCmBx.SelectedItem)
                             {
                                 readExcelSheet(file.Name);
                             }
