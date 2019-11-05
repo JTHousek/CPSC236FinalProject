@@ -58,9 +58,9 @@
             this.filterCriteriaGrpBx.Controls.Add(this.courseRB);
             this.filterCriteriaGrpBx.Controls.Add(this.semesterRB);
             this.filterCriteriaGrpBx.Controls.Add(this.yearRB);
-            this.filterCriteriaGrpBx.Location = new System.Drawing.Point(12, 12);
+            this.filterCriteriaGrpBx.Location = new System.Drawing.Point(12, 26);
             this.filterCriteriaGrpBx.Name = "filterCriteriaGrpBx";
-            this.filterCriteriaGrpBx.Size = new System.Drawing.Size(106, 164);
+            this.filterCriteriaGrpBx.Size = new System.Drawing.Size(106, 141);
             this.filterCriteriaGrpBx.TabIndex = 1;
             this.filterCriteriaGrpBx.TabStop = false;
             this.filterCriteriaGrpBx.Text = "Filter Criteria";
@@ -68,7 +68,7 @@
             // noneRB
             // 
             this.noneRB.AutoSize = true;
-            this.noneRB.Location = new System.Drawing.Point(6, 28);
+            this.noneRB.Location = new System.Drawing.Point(6, 19);
             this.noneRB.Name = "noneRB";
             this.noneRB.Size = new System.Drawing.Size(51, 17);
             this.noneRB.TabIndex = 4;
@@ -79,7 +79,7 @@
             // sectionRB
             // 
             this.sectionRB.AutoSize = true;
-            this.sectionRB.Location = new System.Drawing.Point(6, 120);
+            this.sectionRB.Location = new System.Drawing.Point(6, 111);
             this.sectionRB.Name = "sectionRB";
             this.sectionRB.Size = new System.Drawing.Size(61, 17);
             this.sectionRB.TabIndex = 3;
@@ -91,7 +91,7 @@
             // courseRB
             // 
             this.courseRB.AutoSize = true;
-            this.courseRB.Location = new System.Drawing.Point(6, 97);
+            this.courseRB.Location = new System.Drawing.Point(6, 88);
             this.courseRB.Name = "courseRB";
             this.courseRB.Size = new System.Drawing.Size(58, 17);
             this.courseRB.TabIndex = 2;
@@ -103,7 +103,7 @@
             // semesterRB
             // 
             this.semesterRB.AutoSize = true;
-            this.semesterRB.Location = new System.Drawing.Point(6, 74);
+            this.semesterRB.Location = new System.Drawing.Point(6, 65);
             this.semesterRB.Name = "semesterRB";
             this.semesterRB.Size = new System.Drawing.Size(69, 17);
             this.semesterRB.TabIndex = 1;
@@ -115,7 +115,7 @@
             // yearRB
             // 
             this.yearRB.AutoSize = true;
-            this.yearRB.Location = new System.Drawing.Point(6, 51);
+            this.yearRB.Location = new System.Drawing.Point(6, 42);
             this.yearRB.Name = "yearRB";
             this.yearRB.Size = new System.Drawing.Size(47, 17);
             this.yearRB.TabIndex = 0;
@@ -248,7 +248,7 @@
             // consoleBxLB
             // 
             this.consoleBxLB.AutoSize = true;
-            this.consoleBxLB.Location = new System.Drawing.Point(674, 129);
+            this.consoleBxLB.Location = new System.Drawing.Point(479, 129);
             this.consoleBxLB.Name = "consoleBxLB";
             this.consoleBxLB.Size = new System.Drawing.Size(45, 13);
             this.consoleBxLB.TabIndex = 17;

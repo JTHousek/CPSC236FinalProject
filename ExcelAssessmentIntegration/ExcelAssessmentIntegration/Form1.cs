@@ -85,17 +85,17 @@ namespace ExcelAssessmentIntegration
 
 
             }
-            catch (Exception)
+            catch (FileNotFoundException ex)
             {
-                MessageBox.Show("ERROR: FILE NOT READ");
+                MessageBox.Show("ERROR: FILE NOT READ, Exception: " + ex.GetType()) ;
             }
         }
 
         private void ReadExcelBtn_Click(object sender, EventArgs e)
         {
             int filterType = 0;
-            int i = 0;
             int convertYear = 0;
+            const int FINAL_YEAR = 99;
 
             String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
@@ -142,22 +142,18 @@ namespace ExcelAssessmentIntegration
                         foreach (FileInfo file in Files)
                         {
                             delimitedFileName = file.Name.Split('_');
-                            try
+                            if (convertYear >= 00 && convertYear <= FINAL_YEAR)
                             {
-
-                                if (convertYear >= 00 && convertYear <= 99)
+                                if (delimitedFileName[0] == yearTBx.Text)
                                 {
-                                    if (delimitedFileName[0] == yearTBx.Text)
-                                    {
-                                        readExcelSheet(file.Name);
-                                    }
+                                    readExcelSheet(file.Name);
                                 }
-
                             }
-                            catch (Exception)
+                            else
                             {
-                                MessageBox.Show("ERROR: Invalid Year Entry");
+                                consoleOutputTxB.AppendText("Value is not in the year range. \n");
                             }
+                            
                         }
                     }
                     else
