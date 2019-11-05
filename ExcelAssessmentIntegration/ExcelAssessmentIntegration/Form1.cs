@@ -102,6 +102,10 @@ namespace ExcelAssessmentIntegration
             int filesCount = dataFilesDir.GetFiles().Length;
             MessageBox.Show(filesCount.ToString());
 
+            if (noneRB.Checked)
+            {
+                filterType = 1;
+            }
             if (yearRB.Checked)
             {
                 filterType = 2;
@@ -127,10 +131,7 @@ namespace ExcelAssessmentIntegration
                         FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
                         foreach (FileInfo file in Files)
                         {
-                            if (Int32.TryParse(yearTBx.Text, out int x))
-                            {
-                                readExcelSheet(file.Name);
-                            }
+                            readExcelSheet(file.Name);  
                         }
                     }
                     break;
