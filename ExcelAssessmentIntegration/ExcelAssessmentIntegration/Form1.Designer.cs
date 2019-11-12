@@ -38,7 +38,6 @@
             this.yearTBx = new System.Windows.Forms.TextBox();
             this.semesterCmBx = new System.Windows.Forms.ComboBox();
             this.courseCmBx = new System.Windows.Forms.ComboBox();
-            this.sectionCmBx = new System.Windows.Forms.ComboBox();
             this.readExcelBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,6 +47,7 @@
             this.consoleBoxLB = new System.Windows.Forms.Label();
             this.consoleBxLB = new System.Windows.Forms.Label();
             this.consoleOutputTxB = new System.Windows.Forms.TextBox();
+            this.sectionTBx = new System.Windows.Forms.TextBox();
             this.filterCriteriaGrpBx.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +71,7 @@
             this.noneRB.Location = new System.Drawing.Point(6, 19);
             this.noneRB.Name = "noneRB";
             this.noneRB.Size = new System.Drawing.Size(51, 17);
-            this.noneRB.TabIndex = 4;
+            this.noneRB.TabIndex = 0;
             this.noneRB.TabStop = true;
             this.noneRB.Text = "None";
             this.noneRB.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@
             this.yearTBx.Location = new System.Drawing.Point(136, 29);
             this.yearTBx.MaxLength = 2;
             this.yearTBx.Name = "yearTBx";
-            this.yearTBx.Size = new System.Drawing.Size(100, 20);
+            this.yearTBx.Size = new System.Drawing.Size(121, 20);
             this.yearTBx.TabIndex = 2;
             // 
             // semesterCmBx
@@ -140,7 +140,7 @@
             "Spring",
             "Summer",
             "Winter"});
-            this.semesterCmBx.Location = new System.Drawing.Point(268, 28);
+            this.semesterCmBx.Location = new System.Drawing.Point(282, 28);
             this.semesterCmBx.Name = "semesterCmBx";
             this.semesterCmBx.Size = new System.Drawing.Size(121, 21);
             this.semesterCmBx.TabIndex = 3;
@@ -149,32 +149,24 @@
             // 
             this.courseCmBx.FormattingEnabled = true;
             this.courseCmBx.Items.AddRange(new object[] {
-            "CPSC 130",
-            "CPSC 146",
-            "CPSC 207",
-            "CPSC 217",
-            "CPSC 246",
-            "CPSC 300",
-            "CPSC 311",
-            "CPSC 323",
-            "CPSC 327",
-            "CPSC 337",
-            "CPSC 376",
-            "CPSC 423",
-            "CPSC 427",
-            "CPSC 488"});
-            this.courseCmBx.Location = new System.Drawing.Point(418, 28);
+            "CPSC130",
+            "CPSC146",
+            "CPSC207",
+            "CPSC217",
+            "CPSC246",
+            "CPSC300",
+            "CPSC311",
+            "CPSC323",
+            "CPSC327",
+            "CPSC337",
+            "CPSC376",
+            "CPSC423",
+            "CPSC427",
+            "CPSC488"});
+            this.courseCmBx.Location = new System.Drawing.Point(430, 28);
             this.courseCmBx.Name = "courseCmBx";
             this.courseCmBx.Size = new System.Drawing.Size(121, 21);
             this.courseCmBx.TabIndex = 4;
-            // 
-            // sectionCmBx
-            // 
-            this.sectionCmBx.FormattingEnabled = true;
-            this.sectionCmBx.Location = new System.Drawing.Point(566, 28);
-            this.sectionCmBx.Name = "sectionCmBx";
-            this.sectionCmBx.Size = new System.Drawing.Size(121, 21);
-            this.sectionCmBx.TabIndex = 5;
             // 
             // readExcelBtn
             // 
@@ -201,7 +193,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(136, 8);
+            this.label1.Location = new System.Drawing.Point(133, 10);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 13);
@@ -211,7 +203,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(268, 8);
+            this.label2.Location = new System.Drawing.Point(279, 10);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(51, 13);
@@ -221,7 +213,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(418, 8);
+            this.label3.Location = new System.Drawing.Point(427, 10);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
@@ -231,12 +223,12 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(566, 8);
+            this.label4.Location = new System.Drawing.Point(574, 9);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 13);
+            this.label4.Size = new System.Drawing.Size(104, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Section";
+            this.label4.Text = "Section (Format: SS)";
             // 
             // consoleBoxLB
             // 
@@ -264,6 +256,14 @@
             this.consoleOutputTxB.TabIndex = 18;
             this.consoleOutputTxB.Visible = false;
             // 
+            // sectionTBx
+            // 
+            this.sectionTBx.Location = new System.Drawing.Point(577, 28);
+            this.sectionTBx.MaxLength = 2;
+            this.sectionTBx.Name = "sectionTBx";
+            this.sectionTBx.Size = new System.Drawing.Size(121, 20);
+            this.sectionTBx.TabIndex = 19;
+            // 
             // ExcelIntegrationAssessmentWindow
             // 
             this.AcceptButton = this.readExcelBtn;
@@ -272,6 +272,7 @@
             this.CancelButton = this.cancelBtn;
             this.ClientSize = new System.Drawing.Size(731, 210);
             this.ControlBox = false;
+            this.Controls.Add(this.sectionTBx);
             this.Controls.Add(this.consoleOutputTxB);
             this.Controls.Add(this.consoleBxLB);
             this.Controls.Add(this.consoleBoxLB);
@@ -281,7 +282,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.readExcelBtn);
-            this.Controls.Add(this.sectionCmBx);
             this.Controls.Add(this.courseCmBx);
             this.Controls.Add(this.semesterCmBx);
             this.Controls.Add(this.yearTBx);
@@ -306,7 +306,6 @@
         private System.Windows.Forms.TextBox yearTBx;
         private System.Windows.Forms.ComboBox semesterCmBx;
         private System.Windows.Forms.ComboBox courseCmBx;
-        private System.Windows.Forms.ComboBox sectionCmBx;
         private System.Windows.Forms.Button readExcelBtn;
         private System.Windows.Forms.Button cancelBtn;
         private System.Windows.Forms.Label label1;
@@ -317,6 +316,7 @@
         private System.Windows.Forms.Label consoleBoxLB;
         private System.Windows.Forms.Label consoleBxLB;
         private System.Windows.Forms.TextBox consoleOutputTxB;
+        private System.Windows.Forms.TextBox sectionTBx;
     }
 }
 
