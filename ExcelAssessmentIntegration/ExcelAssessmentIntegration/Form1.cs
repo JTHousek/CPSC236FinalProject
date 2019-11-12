@@ -14,13 +14,18 @@ namespace ExcelAssessmentIntegration
 {
     public partial class ExcelIntegrationAssessmentWindow : Form
     {
-        System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\"); 
+        System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\");
+        private Node obj1 = new Node();
+        private Node obj2 = new Node();
+        private Node obj3 = new Node();
         public ExcelIntegrationAssessmentWindow()
         {
             InitializeComponent();
         }
         private void readExcelSheet(string sheetPath)
         {
+            String objStr = "";
+            int convVal = 0;
             //open excelApp and create the new application
             Excel.Application excelApp;
             excelApp = new Excel.Application();
@@ -69,15 +74,101 @@ namespace ExcelAssessmentIntegration
                 {
                     for (colCount = 1; colCount <= range.Columns.Count; colCount++)
                     {
-                        if (range.Cells[rowCount, colCount].Value2 != null)
+                        objStr = range.Cells[rowCount, 1].Value2.ToString();
+                        str = range.Cells[rowCount, colCount].Value2.ToString();
+
+                        switch(objStr)
                         {
-                            str = range.Cells[rowCount, colCount].Value2.ToString();
-                            pullDataIntoArray(str, colCount);
-                            //MessageBox.Show("Value in cell " + rowCount + " " + colCount + " is " + str); //print each individual cell
+                            case "objective1":
+                                if (range.Cells[rowCount, colCount].Value2 != null)
+                                {
+                                    str = range.Cells[rowCount, colCount].Value2.ToString();
+                                    if (int.TryParse(str, out convVal))
+                                    {
+                                        switch(colCount)
+                                        {
+                                            case 2:
+                                                obj1.setStudents(obj1.getStudents() + convVal);
+                                                break;
+
+                                            case 3:
+                                                obj1.setStudents(obj1.getMaxScore() + convVal);
+                                                break;
+
+                                            case 4:
+                                                obj1.setStudents(obj1.getActualScore() + convVal);
+                                                break;
+
+                                            default:
+                                                MessageBox.Show("no");
+                                                break;
+                                        }
+                                    }
+                                    
+                                }
+                                break;
+                            case "objective2":
+                                if (range.Cells[rowCount, colCount].Value2 != null)
+                                {
+                                    str = range.Cells[rowCount, colCount].Value2.ToString();
+                                    if (int.TryParse(str, out convVal))
+                                    {
+                                        switch (colCount)
+                                        {
+                                            case 2:
+                                                obj2.setStudents(obj2.getStudents() + convVal);
+                                                break;
+
+                                            case 3:
+                                                obj2.setStudents(obj2.getMaxScore() + convVal);
+                                                break;
+
+                                            case 4:
+                                                obj2.setStudents(obj2.getActualScore() + convVal);
+                                                break;
+
+                                            default:
+                                                MessageBox.Show("no");
+                                                break;
+                                        }
+                                    }
+
+                                }
+                                break;
+                            case "objective3":
+                                if (range.Cells[rowCount, colCount].Value2 != null)
+                                {
+                                    str = range.Cells[rowCount, colCount].Value2.ToString();
+                                    if (int.TryParse(str, out convVal))
+                                    {
+                                        switch (colCount)
+                                        {
+                                            case 2:
+                                                obj3.setStudents(obj3.getStudents() + convVal);
+                                                break;
+
+                                            case 3:
+                                                obj3.setStudents(obj3.getMaxScore() + convVal);
+                                                break;
+
+                                            case 4:
+                                                obj3.setStudents(obj3.getActualScore() + convVal);
+                                                break;
+
+                                            default:
+                                                MessageBox.Show("no");
+                                                break;
+                                        }
+                                    }
+
+                                }
+                                break;
                         }
 
                     }
                 }
+
+                MessageBox.Show(obj1.getStudents().ToString());
 
                 //close
                 excelWorkbook.Close(true, null, null);
@@ -96,6 +187,7 @@ namespace ExcelAssessmentIntegration
             int filterType = 0;
             int convertYear = 0;
             const int FINAL_YEAR = 99;
+            const int ZERO = 00;
 
             String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
@@ -142,7 +234,7 @@ namespace ExcelAssessmentIntegration
                         foreach (FileInfo file in Files)
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (convertYear >= 00 && convertYear <= FINAL_YEAR)
+                            if (convertYear >= ZERO && convertYear <= FINAL_YEAR)
                             {
                                 if (delimitedFileName[0] == yearTBx.Text)
                                 {
@@ -259,5 +351,52 @@ namespace ExcelAssessmentIntegration
                     break;
             }
         }
+
+    }
+}
+
+public class Node
+{
+    private Node objective;
+    private int students;
+    private int maxScore;
+    private int actualScore;
+
+    public Node()
+    {
+        objective = null;
+        students = 0;
+        maxScore = 0;
+        actualScore = 0;
+    }
+
+    public void setStudents(int studentVal)
+    {
+        students = studentVal;
+    }
+
+    public int getStudents()
+    {
+        return students;
+    }
+
+    public void setMaxScore(int scoreMax)
+    {
+        maxScore = scoreMax;
+    }
+
+    public int getMaxScore()
+    {
+        return maxScore;
+    }
+
+    public void setActualScore(int studentActual)
+    {
+        actualScore = studentActual;
+    }
+
+    public int getActualScore()
+    {
+        return actualScore;
     }
 }
