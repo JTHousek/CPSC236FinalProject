@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Xml.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,42 @@ namespace ExcelAssessmentIntegration
         {
             InitializeComponent();
         }
+
+        //a method which loads startup.xml which houses the contents of each filter dropdown
+        private void startupXMLLoad(object sender, EventArgs e)
+        {
+            XElement element = null;
+            List<KeyValuePair<int, string>> years = new List<KeyValuePair<int, string>>();
+            List<KeyValuePair<int, string>> semesters = new List<KeyValuePair<int, string>>();
+            List<KeyValuePair<int, string>> courses = new List<KeyValuePair<int, string>>();
+            List<KeyValuePair<int, string>> sections = new List<KeyValuePair<int, string>>();
+            try
+            {
+                element = XElement.Load("..\\startup.xml");
+                years.AddRange((from elem in element.Descendants("year") select new KeyValuePair<int, string>((int) elem.Attribute("key"), (string) elem.Attribute("value"))));
+                semesters.AddRange((from elem in element.Descendants("semester") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
+                courses.AddRange((from elem in element.Descendants("course") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
+                sections.AddRange((from elem in element.Descendants("section") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
+            }
+            catch (FileNotFoundException ex)
+            {
+                consoleOutputTxB.AppendText("ERROR: XML FILE NOT READ, Exception: " + ex.GetType() + "\n");
+            }
+            yearCmBx.DataSource = years;
+            yearCmBx.ValueMember = "Key";
+            yearCmBx.DisplayMember = "Value";
+            semesterCmBx.DataSource = semesters;
+            semesterCmBx.ValueMember = "Key";
+            semesterCmBx.DisplayMember = "Value";
+            courseCmBx.DataSource = courses;
+            courseCmBx.ValueMember = "Key";
+            courseCmBx.DisplayMember = "Value";
+            sectionCmBx.DataSource = sections;
+            sectionCmBx.ValueMember = "Key";
+            sectionCmBx.DisplayMember = "Value";
+        }
+        
+        //a method to load in requested excelsheets based on their path in the file system
         private void readExcelSheet(string sheetPath)
         {
             String objStr = "";
@@ -160,14 +197,12 @@ namespace ExcelAssessmentIntegration
                                                 break;
                                         }
                                     }
-
                                 }
                                 break;
                         }
 
                     }
                 }
-
                 MessageBox.Show(obj1.getStudents().ToString());
 
                 //close
@@ -185,11 +220,7 @@ namespace ExcelAssessmentIntegration
         private void ReadExcelBtn_Click(object sender, EventArgs e)
         {
             int filterType = 0;
-            int convertYear = 0;
-            int convertSection = 0;
             string semesterSelected;
-            const int FINAL_YEAR = 99;
-            const int ZERO = 00;
 
             String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
@@ -221,151 +252,79 @@ namespace ExcelAssessmentIntegration
             switch (filterType)
             {
                 case 1: //filter by nothing    
-                    
                     foreach (FileInfo file in Files)
                     {
                         readExcelSheet(file.Name);  
-                    }
-                    
+                    }   
                     break;
 
                 case 2: //filter by year 
-
-                    if (Int32.TryParse(yearTBx.Text.Trim(), out convertYear))
+                    foreach (FileInfo file in Files)
                     {
-                        foreach (FileInfo file in Files)
+                        delimitedFileName = file.Name.Split('_');
+                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0]) //removes the xml insertion artifacting
                         {
-                            delimitedFileName = file.Name.Split('_');
-                            if (convertYear >= ZERO && convertYear <= FINAL_YEAR)
-                            {
-                                if (delimitedFileName[0] == yearTBx.Text)
-                                {
-                                    readExcelSheet(file.Name);
-                                }
-                            }
-                            else
-                            {
-                                consoleOutputTxB.AppendText("Value is not in the year range. \n");
-                            }
-                            
+                            readExcelSheet(file.Name);
                         }
                     }
-                    else
-                    {
-                        consoleOutputTxB.Visible = true;
-                        consoleBxLB.Visible = true;
-
-                        consoleOutputTxB.AppendText("Value is not an integer. Please reenter the value \n");
-                    }
-
                     break;
+
                 case 3: //filter by semester
-                    if (Int32.TryParse(yearTBx.Text.Trim(), out convertYear))
+                    foreach (FileInfo file in Files)
                     {
-                        foreach (FileInfo file in Files)
+                        delimitedFileName = file.Name.Split('_');
+                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                         {
-                            delimitedFileName = file.Name.Split('_');
-                            if (convertYear >= ZERO && convertYear <= FINAL_YEAR)
+                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                            semesterSelected = semesterSelected.ToLower();
+                            if (delimitedFileName[1] == semesterSelected)
                             {
-                                if (delimitedFileName[0] == yearTBx.Text)
+                                readExcelSheet(file.Name);        
+                            }
+                        }
+                    }
+                    break;
+
+                case 4: //filter by course
+                    foreach (FileInfo file in Files)
+                    {
+                        delimitedFileName = file.Name.Split('_');
+                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                        {
+                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                            semesterSelected = semesterSelected.ToLower();
+                            if (delimitedFileName[1] == semesterSelected)
+                            {
+                                if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                                 {
-                                    semesterSelected = semesterCmBx.SelectedItem.ToString();
-                                    semesterSelected = semesterSelected.ToLower();
-                                    if (delimitedFileName[1] == semesterSelected)
+                                    readExcelSheet(file.Name);                               
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case 5: //filter by section
+                    foreach (FileInfo file in Files)
+                    {
+                        delimitedFileName = file.Name.Split('_');
+                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0]) 
+                        { 
+                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                            semesterSelected = semesterSelected.ToLower();
+                            if (delimitedFileName[1] == semesterSelected)
+                            {
+                                if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                {
+                                    if (delimitedFileName[3] == sectionCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                                     {
                                         readExcelSheet(file.Name);
                                     }
+                                            
                                 }
                             }
-                            else
-                            {
-                                consoleOutputTxB.AppendText("Value is not in the year range. \n");
-                            }
                         }
-                    }
-                    else
-                    {
-                        consoleOutputTxB.Visible = true;
-                        consoleBxLB.Visible = true;
-
-                        consoleOutputTxB.AppendText("Value is not an integer. Please reenter the value \n");
-                    }
-                    break;
-                case 4: //filter by course
-                    if (Int32.TryParse(yearTBx.Text.Trim(), out convertYear))
-                    {
-                        foreach (FileInfo file in Files)
-                        {
-                            delimitedFileName = file.Name.Split('_');
-                            if (convertYear >= ZERO && convertYear <= FINAL_YEAR)
-                            {
-                                if (delimitedFileName[0] == yearTBx.Text)
-                                {
-                                    semesterSelected = semesterCmBx.SelectedItem.ToString();
-                                    semesterSelected = semesterSelected.ToLower();
-                                    if (delimitedFileName[1] == semesterSelected)
-                                    {
-                                        if (delimitedFileName[2] == (string)courseCmBx.SelectedItem)
-                                        {
-                                            readExcelSheet(file.Name);
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                consoleOutputTxB.AppendText("Value is not in the year range. \n");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        consoleOutputTxB.Visible = true;
-                        consoleBxLB.Visible = true;
-
-                        consoleOutputTxB.AppendText("Value is not an integer. Please reenter the value \n");
-                    }
-                    break;
-                case 5: //filter by section
-                    if (Int32.TryParse(yearTBx.Text.Trim(), out convertYear))
-                    {
-                        foreach (FileInfo file in Files)
-                        {
-                            delimitedFileName = file.Name.Split('_');
-                            if (convertYear >= ZERO && convertYear <= FINAL_YEAR)
-                            {
-                                if (delimitedFileName[0] == yearTBx.Text)
-                                {
-                                    semesterSelected = semesterCmBx.SelectedItem.ToString();
-                                    semesterSelected = semesterSelected.ToLower();
-                                    if (delimitedFileName[1] == semesterSelected)
-                                    {
-                                        if (delimitedFileName[2] == (string)courseCmBx.SelectedItem)
-                                        {
-                                            if (Int32.TryParse(yearTBx.Text.Trim(), out convertSection))
-                                            {
-                                                if (delimitedFileName[3] == (string)sectionTBx.Text.Trim())
-                                                {
-                                                    readExcelSheet(file.Name);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                consoleOutputTxB.AppendText("Value is not in the year range. \n");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        consoleOutputTxB.Visible = true;
-                        consoleBxLB.Visible = true;
-
-                        consoleOutputTxB.AppendText("Value is not an integer. Please reenter the value \n");
-                    }
+                    } 
                     break;
             }
 
@@ -380,38 +339,38 @@ namespace ExcelAssessmentIntegration
         {
             if (noneRB.Checked == true)
             {
-                yearTBx.Enabled = false;
+                yearCmBx.Enabled = false;
                 semesterCmBx.Enabled = false;
                 courseCmBx.Enabled = false;
-                sectionTBx.Enabled = false;
+                sectionCmBx.Enabled = false;
             }
             if (yearRB.Checked == true)
             {
-                yearTBx.Enabled = true;
+                yearCmBx.Enabled = true;
                 semesterCmBx.Enabled = false;
                 courseCmBx.Enabled = false;
-                sectionTBx.Enabled = false;
+                sectionCmBx.Enabled = false;
             }
             if (semesterRB.Checked == true)
             {
-                yearTBx.Enabled = true;
+                yearCmBx.Enabled = true;
                 semesterCmBx.Enabled = true;
                 courseCmBx.Enabled = false;
-                sectionTBx.Enabled = false;
+                sectionCmBx.Enabled = false;
             }
             if (courseRB.Checked == true)
             {
-                yearTBx.Enabled = true;
+                yearCmBx.Enabled = true;
                 semesterCmBx.Enabled = true;
                 courseCmBx.Enabled = true;
-                sectionTBx.Enabled = false;
+                sectionCmBx.Enabled = false;
             }
             if (sectionRB.Checked == true)
             {
-                yearTBx.Enabled = true;
+                yearCmBx.Enabled = true;
                 semesterCmBx.Enabled = true;
                 courseCmBx.Enabled = true;
-                sectionTBx.Enabled = true;
+                sectionCmBx.Enabled = true;
             }
 
         }

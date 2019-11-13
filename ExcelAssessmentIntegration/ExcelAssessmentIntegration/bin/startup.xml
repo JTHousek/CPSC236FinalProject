@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<filterCriteria>
+	<years>
+		<year key ="1"  value="19" />
+	</years>
+	<semesters>
+		<semester key ="1"  value="Fall" />
+		<semester key ="2"  value="Winter" />
+		<semester key ="3"  value="Spring" />
+		<semester key ="4"  value="Summer" />
+	</semesters>
+	<courses>
+		<course key ="1"  value="CPSC130" />
+		<course key ="2"  value="CPSC146" />
+		<course key ="3"  value="CPSC207" />
+		<course key ="4"  value="CPSC217" />
+		<course key ="5"  value="CPSC236" />	
+		<course key ="6"  value="CPSC246" />
+		<course key ="7"  value="CPSC300" />
+		<course key ="8"  value="CPSC311" />
+		<course key ="9" value="CPSC323" />
+		<course key ="10" value="CPSC327" />
+		<course key ="11" value="CPSC423" />
+		<course key ="12" value="CPSC427" />
+		<course key ="13" value="CPSC488" />
+	</courses>
+	<sections>
+		<section key ="1"  value="01" />
+		<section key ="2"  value="02" />
+		<section key ="3"  value="03" />
+		<section key ="4"  value="04" />
+	</sections>
+</filterCriteria>
