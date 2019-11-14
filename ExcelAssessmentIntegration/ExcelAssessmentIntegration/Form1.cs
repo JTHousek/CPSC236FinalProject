@@ -24,8 +24,138 @@ namespace ExcelAssessmentIntegration
             InitializeComponent();
         }
 
+        private void formOnLoad(object sender, EventArgs e)
+        {
+            loadAvailableFiles();
+            startupXMLLoad();
+        }
+
+        private void loadAvailableFiles()
+        {
+            FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+            int filterType = 1; //none by default for when the form first loads
+            string semesterSelected;
+            String[] delimitedFileName;
+            int filesCount = dataFilesDir.GetFiles().Length;
+            filesLBx.Items.Clear();
+            //MessageBox.Show(filesCount.ToString());
+
+            if (noneRB.Checked)
+            {
+                filterType = 1;
+            }
+            if (yearRB.Checked)
+            {
+                filterType = 2;
+            }
+            if (semesterRB.Checked)
+            {
+                filterType = 3;
+            }
+            if (courseRB.Checked)
+            {
+                filterType = 4;
+            }
+            if (sectionRB.Checked)
+            {
+                filterType = 5;
+            }
+
+            switch (filterType)
+            {
+                case 1: //filter by nothing    
+                    foreach (FileInfo file in Files)
+                    {
+                        if (!selectedFilesLBx.Items.Contains(file.Name)) //if file is already selected, don't add
+                        { 
+                            filesLBx.Items.Add(file.Name);
+                        }
+                    }
+                    break;
+
+                case 2: //filter by year 
+                    foreach (FileInfo file in Files)
+                    {
+                        if (!selectedFilesLBx.Items.Contains(file.Name))
+                        {
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0]) //removes the xml insertion artifacting
+                            {
+                                filesLBx.Items.Add(file.Name);
+                            }
+                        }
+                    }
+                    break;
+
+                case 3: //filter by semester
+                    foreach (FileInfo file in Files)
+                    {
+                        if (!selectedFilesLBx.Items.Contains(file.Name)) { 
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                            {
+                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                semesterSelected = semesterSelected.ToLower();
+                                if (delimitedFileName[1] == semesterSelected)
+                                {
+                                    filesLBx.Items.Add(file.Name);
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case 4: //filter by course
+                    foreach (FileInfo file in Files)
+                    {
+                        if (!selectedFilesLBx.Items.Contains(file.Name)) { 
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                            {
+                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                semesterSelected = semesterSelected.ToLower();
+                                if (delimitedFileName[1] == semesterSelected)
+                                {
+                                    if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                    {
+                                        filesLBx.Items.Add(file.Name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case 5: //filter by section
+                    foreach (FileInfo file in Files)
+                    {
+                        if (!selectedFilesLBx.Items.Contains(file.Name))
+                        {
+                            delimitedFileName = file.Name.Split('_');
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                            {
+                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                semesterSelected = semesterSelected.ToLower();
+                                if (delimitedFileName[1] == semesterSelected)
+                                {
+                                    if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                    {
+                                        if (delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                        {
+                                            filesLBx.Items.Add(file.Name);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+
+        }
+
         //a method which loads startup.xml which houses the contents of each filter dropdown
-        private void startupXMLLoad(object sender, EventArgs e)
+        private void startupXMLLoad()
         {
             XElement element = null;
             List<KeyValuePair<int, string>> years = new List<KeyValuePair<int, string>>();
@@ -216,118 +346,35 @@ namespace ExcelAssessmentIntegration
                 consoleOutputTxB.AppendText("ERROR: FILE NOT READ, Exception: " + ex.GetType() + "\n");
             }
         }
+        private void AddSheetBtn_Click(object sender, EventArgs e) //add a sheet to the selected listbox
+        {
+            if(filesLBx.SelectedItem != null) //verify that something is selected 
+            {
+                selectedFilesLBx.Items.Add(filesLBx.SelectedItem);
+                filesLBx.Items.Remove(filesLBx.SelectedItem);
+            }
+        }
+
+        private void RemoveSheetBtn_Click(object sender, EventArgs e) //remove a sheet from the selected listbox
+        {
+            if (selectedFilesLBx.SelectedItem != null) //verify that something is selected
+            {
+                filesLBx.Items.Add(selectedFilesLBx.SelectedItem);
+                selectedFilesLBx.Items.Remove(selectedFilesLBx.SelectedItem);
+            }
+        }
+
+        private void FilterBtn_Click(object sender, EventArgs e)
+        {
+            loadAvailableFiles();
+        }
 
         private void ReadExcelBtn_Click(object sender, EventArgs e)
         {
-            int filterType = 0;
-            string semesterSelected;
-
-            String[] delimitedFileName;
-            int filesCount = dataFilesDir.GetFiles().Length;
-            //MessageBox.Show(filesCount.ToString());
-
-            if (noneRB.Checked)
+            foreach(string item in selectedFilesLBx.Items)
             {
-                filterType = 1;
+                readExcelSheet(item);
             }
-            if (yearRB.Checked)
-            {
-                filterType = 2;
-            }
-            if (semesterRB.Checked)
-            {
-                filterType = 3;
-            }
-            if (courseRB.Checked)
-            {
-                filterType = 4;
-            }
-            if (sectionRB.Checked)
-            {
-                filterType = 5;
-            }
-
-            FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
-
-            switch (filterType)
-            {
-                case 1: //filter by nothing    
-                    foreach (FileInfo file in Files)
-                    {
-                        readExcelSheet(file.Name);  
-                    }   
-                    break;
-
-                case 2: //filter by year 
-                    foreach (FileInfo file in Files)
-                    {
-                        delimitedFileName = file.Name.Split('_');
-                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0]) //removes the xml insertion artifacting
-                        {
-                            readExcelSheet(file.Name);
-                        }
-                    }
-                    break;
-
-                case 3: //filter by semester
-                    foreach (FileInfo file in Files)
-                    {
-                        delimitedFileName = file.Name.Split('_');
-                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
-                        {
-                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                            semesterSelected = semesterSelected.ToLower();
-                            if (delimitedFileName[1] == semesterSelected)
-                            {
-                                readExcelSheet(file.Name);        
-                            }
-                        }
-                    }
-                    break;
-
-                case 4: //filter by course
-                    foreach (FileInfo file in Files)
-                    {
-                        delimitedFileName = file.Name.Split('_');
-                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
-                        {
-                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                            semesterSelected = semesterSelected.ToLower();
-                            if (delimitedFileName[1] == semesterSelected)
-                            {
-                                if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
-                                {
-                                    readExcelSheet(file.Name);                               
-                                }
-                            }
-                        }
-                    }
-                    break;
-
-                case 5: //filter by section
-                    foreach (FileInfo file in Files)
-                    {
-                        delimitedFileName = file.Name.Split('_');
-                        if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0]) 
-                        { 
-                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                            semesterSelected = semesterSelected.ToLower();
-                            if (delimitedFileName[1] == semesterSelected)
-                            {
-                                if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
-                                {
-                                    if (delimitedFileName[3] == sectionCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
-                                    {
-                                        readExcelSheet(file.Name);
-                                    }
-                                            
-                                }
-                            }
-                        }
-                    } 
-                    break;
-            }
-
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
@@ -389,7 +436,6 @@ namespace ExcelAssessmentIntegration
                     break;
             }
         }
-
     }
 }
 

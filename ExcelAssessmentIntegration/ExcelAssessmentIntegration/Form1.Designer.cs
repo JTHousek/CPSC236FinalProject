@@ -50,6 +50,11 @@
             this.sectionCmBx = new System.Windows.Forms.ComboBox();
             this.filesLBx = new System.Windows.Forms.ListBox();
             this.selectedFilesLBx = new System.Windows.Forms.ListBox();
+            this.filterBtn = new System.Windows.Forms.Button();
+            this.addSheetBtn = new System.Windows.Forms.Button();
+            this.removeSheetBtn = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.filterCriteriaGrpBx.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,6 +133,7 @@
             // 
             // semesterCmBx
             // 
+            this.semesterCmBx.Enabled = false;
             this.semesterCmBx.FormattingEnabled = true;
             this.semesterCmBx.Location = new System.Drawing.Point(276, 171);
             this.semesterCmBx.Name = "semesterCmBx";
@@ -136,6 +142,7 @@
             // 
             // courseCmBx
             // 
+            this.courseCmBx.Enabled = false;
             this.courseCmBx.FormattingEnabled = true;
             this.courseCmBx.Location = new System.Drawing.Point(417, 171);
             this.courseCmBx.Name = "courseCmBx";
@@ -145,7 +152,7 @@
             // readExcelBtn
             // 
             this.readExcelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.readExcelBtn.Location = new System.Drawing.Point(225, 332);
+            this.readExcelBtn.Location = new System.Drawing.Point(234, 234);
             this.readExcelBtn.Name = "readExcelBtn";
             this.readExcelBtn.Size = new System.Drawing.Size(136, 23);
             this.readExcelBtn.TabIndex = 6;
@@ -156,9 +163,9 @@
             // cancelBtn
             // 
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBtn.Location = new System.Drawing.Point(412, 332);
+            this.cancelBtn.Location = new System.Drawing.Point(417, 234);
             this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(121, 23);
+            this.cancelBtn.Size = new System.Drawing.Size(136, 23);
             this.cancelBtn.TabIndex = 7;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
@@ -214,7 +221,7 @@
             // consoleBxLB
             // 
             this.consoleBxLB.AutoSize = true;
-            this.consoleBxLB.Location = new System.Drawing.Point(443, 379);
+            this.consoleBxLB.Location = new System.Drawing.Point(443, 279);
             this.consoleBxLB.Name = "consoleBxLB";
             this.consoleBxLB.Size = new System.Drawing.Size(45, 13);
             this.consoleBxLB.TabIndex = 17;
@@ -223,7 +230,7 @@
             // 
             // consoleOutputTxB
             // 
-            this.consoleOutputTxB.Location = new System.Drawing.Point(446, 395);
+            this.consoleOutputTxB.Location = new System.Drawing.Point(446, 295);
             this.consoleOutputTxB.Multiline = true;
             this.consoleOutputTxB.Name = "consoleOutputTxB";
             this.consoleOutputTxB.Size = new System.Drawing.Size(237, 53);
@@ -232,6 +239,7 @@
             // 
             // yearCmBx
             // 
+            this.yearCmBx.Enabled = false;
             this.yearCmBx.FormattingEnabled = true;
             this.yearCmBx.Location = new System.Drawing.Point(136, 171);
             this.yearCmBx.Name = "yearCmBx";
@@ -240,6 +248,7 @@
             // 
             // sectionCmBx
             // 
+            this.sectionCmBx.Enabled = false;
             this.sectionCmBx.FormattingEnabled = true;
             this.sectionCmBx.Location = new System.Drawing.Point(562, 171);
             this.sectionCmBx.Name = "sectionCmBx";
@@ -249,18 +258,66 @@
             // filesLBx
             // 
             this.filesLBx.FormattingEnabled = true;
-            this.filesLBx.Location = new System.Drawing.Point(12, 12);
+            this.filesLBx.Location = new System.Drawing.Point(12, 25);
             this.filesLBx.Name = "filesLBx";
-            this.filesLBx.Size = new System.Drawing.Size(671, 134);
+            this.filesLBx.Size = new System.Drawing.Size(280, 121);
             this.filesLBx.TabIndex = 22;
             // 
             // selectedFilesLBx
             // 
             this.selectedFilesLBx.FormattingEnabled = true;
-            this.selectedFilesLBx.Location = new System.Drawing.Point(136, 217);
+            this.selectedFilesLBx.Location = new System.Drawing.Point(410, 25);
             this.selectedFilesLBx.Name = "selectedFilesLBx";
-            this.selectedFilesLBx.Size = new System.Drawing.Size(547, 95);
+            this.selectedFilesLBx.Size = new System.Drawing.Size(280, 121);
             this.selectedFilesLBx.TabIndex = 23;
+            // 
+            // filterBtn
+            // 
+            this.filterBtn.Location = new System.Drawing.Point(325, 205);
+            this.filterBtn.Name = "filterBtn";
+            this.filterBtn.Size = new System.Drawing.Size(136, 23);
+            this.filterBtn.TabIndex = 24;
+            this.filterBtn.Text = "Filter";
+            this.filterBtn.UseVisualStyleBackColor = true;
+            this.filterBtn.Click += new System.EventHandler(this.FilterBtn_Click);
+            // 
+            // addSheetBtn
+            // 
+            this.addSheetBtn.Location = new System.Drawing.Point(309, 38);
+            this.addSheetBtn.Name = "addSheetBtn";
+            this.addSheetBtn.Size = new System.Drawing.Size(75, 23);
+            this.addSheetBtn.TabIndex = 25;
+            this.addSheetBtn.Text = "Add >>";
+            this.addSheetBtn.UseVisualStyleBackColor = true;
+            this.addSheetBtn.Click += new System.EventHandler(this.AddSheetBtn_Click);
+            // 
+            // removeSheetBtn
+            // 
+            this.removeSheetBtn.Location = new System.Drawing.Point(309, 79);
+            this.removeSheetBtn.Name = "removeSheetBtn";
+            this.removeSheetBtn.Size = new System.Drawing.Size(75, 23);
+            this.removeSheetBtn.TabIndex = 26;
+            this.removeSheetBtn.Text = "<< Remove";
+            this.removeSheetBtn.UseVisualStyleBackColor = true;
+            this.removeSheetBtn.Click += new System.EventHandler(this.RemoveSheetBtn_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(74, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Available Files";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(410, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(143, 13);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "Selected Files for Processing";
             // 
             // ExcelIntegrationAssessmentWindow
             // 
@@ -268,8 +325,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(702, 463);
+            this.ClientSize = new System.Drawing.Size(706, 362);
             this.ControlBox = false;
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.removeSheetBtn);
+            this.Controls.Add(this.addSheetBtn);
+            this.Controls.Add(this.filterBtn);
             this.Controls.Add(this.selectedFilesLBx);
             this.Controls.Add(this.filesLBx);
             this.Controls.Add(this.sectionCmBx);
@@ -290,7 +352,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ExcelIntegrationAssessmentWindow";
             this.Text = "Excel Integration Assessment";
-            this.Load += new System.EventHandler(this.startupXMLLoad);
+            this.Load += new System.EventHandler(this.formOnLoad);
             this.filterCriteriaGrpBx.ResumeLayout(false);
             this.filterCriteriaGrpBx.PerformLayout();
             this.ResumeLayout(false);
@@ -321,6 +383,11 @@
         private System.Windows.Forms.ComboBox sectionCmBx;
         private System.Windows.Forms.ListBox filesLBx;
         private System.Windows.Forms.ListBox selectedFilesLBx;
+        private System.Windows.Forms.Button filterBtn;
+        private System.Windows.Forms.Button addSheetBtn;
+        private System.Windows.Forms.Button removeSheetBtn;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }
 
