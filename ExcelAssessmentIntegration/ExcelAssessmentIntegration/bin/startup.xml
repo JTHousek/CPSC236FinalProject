@@ -25,9 +25,9 @@
 		<course key ="13" value="CPSC488" />
 	</courses>
 	<sections>
-		<section key ="1"  value="01" />
-		<section key ="2"  value="02" />
-		<section key ="3"  value="03" />
-		<section key ="4"  value="04" />
+		<section key ="1"  value="1" />
+		<section key ="2"  value="2" />
+		<section key ="3"  value="3" />
+		<section key ="4"  value="4" />
 	</sections>
 </filterCriteria>
