@@ -79,7 +79,7 @@ namespace ExcelAssessmentIntegration
                         if (!selectedFilesLBx.Items.Contains(file.Name))
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0]) //removes the xml insertion artifacting
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString()) //removes the xml insertion artifacting
                             {
                                 filesLBx.Items.Add(file.Name);
                             }
@@ -92,7 +92,7 @@ namespace ExcelAssessmentIntegration
                     {
                         if (!selectedFilesLBx.Items.Contains(file.Name)) { 
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                             {
                                 semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
                                 semesterSelected = semesterSelected.ToLower();
@@ -110,7 +110,7 @@ namespace ExcelAssessmentIntegration
                     {
                         if (!selectedFilesLBx.Items.Contains(file.Name)) { 
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                             {
                                 semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
                                 semesterSelected = semesterSelected.ToLower();
@@ -132,7 +132,7 @@ namespace ExcelAssessmentIntegration
                         if (!selectedFilesLBx.Items.Contains(file.Name))
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                             {
                                 semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
                                 semesterSelected = semesterSelected.ToLower();
@@ -140,7 +140,7 @@ namespace ExcelAssessmentIntegration
                                 {
                                     if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                                     {
-                                        if (delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                        if (delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
                                         {
                                             filesLBx.Items.Add(file.Name);
                                         }
@@ -158,34 +158,50 @@ namespace ExcelAssessmentIntegration
         private void startupXMLLoad()
         {
             XElement element = null;
-            List<KeyValuePair<int, string>> years = new List<KeyValuePair<int, string>>();
+            int maxYear = 0;
+            int maxSection = 0;
+            List<KeyValuePair<int, string>> year = new List<KeyValuePair<int, string>>();
             List<KeyValuePair<int, string>> semesters = new List<KeyValuePair<int, string>>();
             List<KeyValuePair<int, string>> courses = new List<KeyValuePair<int, string>>();
-            List<KeyValuePair<int, string>> sections = new List<KeyValuePair<int, string>>();
+            List<KeyValuePair<int, string>> section = new List<KeyValuePair<int, string>>();
             try
             {
                 element = XElement.Load("..\\startup.xml");
-                years.AddRange((from elem in element.Descendants("year") select new KeyValuePair<int, string>((int) elem.Attribute("key"), (string) elem.Attribute("value"))));
+                year.AddRange((from elem in element.Descendants("year") select new KeyValuePair<int, string>((int) elem.Attribute("key"), (string) elem.Attribute("value"))));
                 semesters.AddRange((from elem in element.Descendants("semester") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
                 courses.AddRange((from elem in element.Descendants("course") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
-                sections.AddRange((from elem in element.Descendants("section") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
+                section.AddRange((from elem in element.Descendants("section") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
             }
             catch (FileNotFoundException ex)
             {
                 consoleOutputTxB.AppendText("ERROR: XML FILE NOT READ, Exception: " + ex.GetType() + "\n");
             }
-            yearCmBx.DataSource = years;
-            yearCmBx.ValueMember = "Key";
-            yearCmBx.DisplayMember = "Value";
+
+            Int32.TryParse(year.ElementAt(0).Value, out maxYear);
+            Int32.TryParse(section.ElementAt(0).Value, out maxSection);
+            //load the years combo box based on the max year provided
+            for (int i = 2000; i <= maxYear; i++)
+            {
+                yearCmBx.Items.Add((i - 2000).ToString("00"));
+            }
+            //load the semesters combo box based on the semesters provided
             semesterCmBx.DataSource = semesters;
             semesterCmBx.ValueMember = "Key";
             semesterCmBx.DisplayMember = "Value";
+            //load the courses combo box based on the courses provided
             courseCmBx.DataSource = courses;
             courseCmBx.ValueMember = "Key";
             courseCmBx.DisplayMember = "Value";
-            sectionCmBx.DataSource = sections;
-            sectionCmBx.ValueMember = "Key";
-            sectionCmBx.DisplayMember = "Value";
+            //load the sections combo box based on the max section provided
+            for (int i = 1; i <= maxSection; i++)
+            {
+                sectionCmBx.Items.Add((i).ToString());
+            }
+            //makes sure selected items are blank at initialization
+            yearCmBx.SelectedItem = null;
+            semesterCmBx.SelectedItem = null;
+            courseCmBx.SelectedItem = null;
+            semesterCmBx.SelectedItem = null;
         }
         
         //a method to load in requested excelsheets based on their path in the file system
