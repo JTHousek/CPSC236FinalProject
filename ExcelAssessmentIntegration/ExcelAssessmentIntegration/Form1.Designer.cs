@@ -262,6 +262,7 @@
             this.filesLBx.Name = "filesLBx";
             this.filesLBx.Size = new System.Drawing.Size(280, 121);
             this.filesLBx.TabIndex = 22;
+            this.filesLBx.DoubleClick += new System.EventHandler(this.AddSheetBtn_Click);
             // 
             // selectedFilesLBx
             // 
@@ -270,6 +271,7 @@
             this.selectedFilesLBx.Name = "selectedFilesLBx";
             this.selectedFilesLBx.Size = new System.Drawing.Size(280, 121);
             this.selectedFilesLBx.TabIndex = 23;
+            this.selectedFilesLBx.DoubleClick += new System.EventHandler(this.RemoveSheetBtn_Click);
             // 
             // filterBtn
             // 

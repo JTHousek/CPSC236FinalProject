@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <filterCriteria>
-	<years>
-		<year key ="1"  value="19" />
-	</years>
+	<maxYear>
+		<!-- Maximum Value for Years -->
+		<year key ="1" value="2019" />
+	</maxYear>
 	<semesters>
+		<!-- Available Semesters -->
 		<semester key ="1"  value="Fall" />
 		<semester key ="2"  value="Winter" />
 		<semester key ="3"  value="Spring" />
 		<semester key ="4"  value="Summer" />
 	</semesters>
 	<courses>
+		<!-- Available Courses -->
 		<course key ="1"  value="CPSC130" />
 		<course key ="2"  value="CPSC146" />
 		<course key ="3"  value="CPSC207" />
@@ -25,9 +28,7 @@
 		<course key ="13" value="CPSC488" />
 	</courses>
 	<sections>
-		<section key ="1"  value="1" />
-		<section key ="2"  value="2" />
-		<section key ="3"  value="3" />
-		<section key ="4"  value="4" />
+		<!-- Maximum Value for Sections -->
+		<section key ="1"  value="4" />
 	</sections>
 </filterCriteria>
