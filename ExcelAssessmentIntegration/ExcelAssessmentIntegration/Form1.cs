@@ -387,6 +387,10 @@ namespace ExcelAssessmentIntegration
 
         private void ReadExcelBtn_Click(object sender, EventArgs e)
         {
+            //this needs to make sure there isn't one already open
+            ProcessedWindow processWindow = new ProcessedWindow();
+            processWindow.ShowDialog();
+
             foreach(string item in selectedFilesLBx.Items)
             {
                 readExcelSheet(item);
