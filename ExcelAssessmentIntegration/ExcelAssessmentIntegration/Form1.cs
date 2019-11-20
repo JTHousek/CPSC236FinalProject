@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ExcelAssessmentIntegration
 {
@@ -34,7 +33,7 @@ namespace ExcelAssessmentIntegration
         {
             FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
             int filterType = 1; //none by default for when the form first loads
-            string semesterSelected;
+            string semesterSelected = "";
             String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
             filesLBx.Items.Clear();
@@ -79,7 +78,7 @@ namespace ExcelAssessmentIntegration
                         if (!selectedFilesLBx.Items.Contains(file.Name))
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString()) //removes the xml insertion artifacting
+                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString()) //removes the xml insertion artifacting
                             {
                                 filesLBx.Items.Add(file.Name);
                             }
@@ -92,11 +91,14 @@ namespace ExcelAssessmentIntegration
                     {
                         if (!selectedFilesLBx.Items.Contains(file.Name)) { 
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
+                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                             {
-                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                                semesterSelected = semesterSelected.ToLower();
-                                if (delimitedFileName[1] == semesterSelected)
+                                if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
+                                {
+                                    semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                    semesterSelected = semesterSelected.ToLower();
+                                }
+                                if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
                                 {
                                     filesLBx.Items.Add(file.Name);
                                 }
@@ -110,13 +112,16 @@ namespace ExcelAssessmentIntegration
                     {
                         if (!selectedFilesLBx.Items.Contains(file.Name)) { 
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
+                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                             {
-                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                                semesterSelected = semesterSelected.ToLower();
-                                if (delimitedFileName[1] == semesterSelected)
+                                if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
                                 {
-                                    if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                    semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                    semesterSelected = semesterSelected.ToLower();
+                                }
+                                if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
+                                {
+                                    if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                                     {
                                         filesLBx.Items.Add(file.Name);
                                     }
@@ -132,15 +137,18 @@ namespace ExcelAssessmentIntegration
                         if (!selectedFilesLBx.Items.Contains(file.Name))
                         {
                             delimitedFileName = file.Name.Split('_');
-                            if (delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
+                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                             {
-                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                                semesterSelected = semesterSelected.ToLower();
-                                if (delimitedFileName[1] == semesterSelected)
+                                if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
                                 {
-                                    if (delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                    semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                    semesterSelected = semesterSelected.ToLower();
+                                }
+                                if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
+                                {
+                                    if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                                     {
-                                        if (delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
+                                        if (sectionCmBx.SelectedItem == null || delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
                                         {
                                             filesLBx.Items.Add(file.Name);
                                         }
@@ -204,164 +212,6 @@ namespace ExcelAssessmentIntegration
             semesterCmBx.SelectedItem = null;
         }
         
-        //a method to load in requested excelsheets based on their path in the file system
-        private void readExcelSheet(string sheetPath)
-        {
-            String objStr = "";
-            int convVal = 0;
-            //open excelApp and create the new application
-            Excel.Application excelApp;
-            excelApp = new Excel.Application();
-            //workbook 
-            Excel.Workbook excelWorkbook;
-            //worksheet 
-            Excel.Worksheet excelWorksheet;
-            //range variable
-            Excel.Range range;
-
-            string str;
-            int rowCount = 0;
-            int colCount = 0;
-
-            //make excel visible to the user
-            excelApp.Visible = true;
-            String path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-
-            //change
-            string workbookPath = path + "\\bin\\dataSheets\\" + sheetPath;
-            //MessageBox.Show(workbookPath);
-
-            try
-            {
-                excelWorkbook = excelApp.Workbooks.Open(workbookPath,
-                   0, false, 5, "", "", false, Excel.XlPlatform.xlWindows, "",
-                   true, false, 0, true, false, false);
-
-                //holds the worksheet
-                Excel.Sheets excelSheets = excelWorkbook.Worksheets;
-
-                //read from this sheet
-                string currentSheet = "Sheet1";
-                excelWorksheet = (Excel.Worksheet)excelSheets.get_Item(currentSheet);
-
-                //find all valid cells
-                range = excelWorksheet.UsedRange;
-
-                //Number of rows
-                Console.WriteLine("Number of Rows: " + range.Rows.Count);
-
-                //Number of columns
-                Console.WriteLine("Rumber of Columns: " + range.Columns.Count);
-
-                for (rowCount = 1; rowCount <= range.Rows.Count; rowCount++)
-                {
-                    for (colCount = 1; colCount <= range.Columns.Count; colCount++)
-                    {
-                        objStr = range.Cells[rowCount, 1].Value2.ToString();
-                        str = range.Cells[rowCount, colCount].Value2.ToString();
-
-                        switch(objStr)
-                        {
-                            case "objective1":
-                                if (range.Cells[rowCount, colCount].Value2 != null)
-                                {
-                                    str = range.Cells[rowCount, colCount].Value2.ToString();
-                                    if (int.TryParse(str, out convVal))
-                                    {
-                                        switch(colCount)
-                                        {
-                                            case 2:
-                                                obj1.setStudents(obj1.getStudents() + convVal);
-                                                break;
-
-                                            case 3:
-                                                obj1.setStudents(obj1.getMaxScore() + convVal);
-                                                break;
-
-                                            case 4:
-                                                obj1.setStudents(obj1.getActualScore() + convVal);
-                                                break;
-
-                                            default:
-                                                MessageBox.Show("no");
-                                                break;
-                                        }
-                                    }
-                                    
-                                }
-                                break;
-                            case "objective2":
-                                if (range.Cells[rowCount, colCount].Value2 != null)
-                                {
-                                    str = range.Cells[rowCount, colCount].Value2.ToString();
-                                    if (int.TryParse(str, out convVal))
-                                    {
-                                        switch (colCount)
-                                        {
-                                            case 2:
-                                                obj2.setStudents(obj2.getStudents() + convVal);
-                                                break;
-
-                                            case 3:
-                                                obj2.setStudents(obj2.getMaxScore() + convVal);
-                                                break;
-
-                                            case 4:
-                                                obj2.setStudents(obj2.getActualScore() + convVal);
-                                                break;
-
-                                            default:
-                                                MessageBox.Show("no");
-                                                break;
-                                        }
-                                    }
-
-                                }
-                                break;
-                            case "objective3":
-                                if (range.Cells[rowCount, colCount].Value2 != null)
-                                {
-                                    str = range.Cells[rowCount, colCount].Value2.ToString();
-                                    if (int.TryParse(str, out convVal))
-                                    {
-                                        switch (colCount)
-                                        {
-                                            case 2:
-                                                obj3.setStudents(obj3.getStudents() + convVal);
-                                                break;
-
-                                            case 3:
-                                                obj3.setStudents(obj3.getMaxScore() + convVal);
-                                                break;
-
-                                            case 4:
-                                                obj3.setStudents(obj3.getActualScore() + convVal);
-                                                break;
-
-                                            default:
-                                                MessageBox.Show("no");
-                                                break;
-                                        }
-                                    }
-                                }
-                                break;
-                        }
-
-                    }
-                }
-                MessageBox.Show(obj1.getStudents().ToString());
-
-                //close
-                excelWorkbook.Close(true, null, null);
-                excelApp.Quit();
-
-
-            }
-            catch (FileNotFoundException ex)
-            {
-                consoleOutputTxB.AppendText("ERROR: FILE NOT READ, Exception: " + ex.GetType() + "\n");
-            }
-        }
         private void AddSheetBtn_Click(object sender, EventArgs e) //add a sheet to the selected listbox
         {
             if(filesLBx.SelectedItem != null) //verify that something is selected 
@@ -389,12 +239,12 @@ namespace ExcelAssessmentIntegration
         {
             //this needs to make sure there isn't one already open
             ProcessedWindow processWindow = new ProcessedWindow();
-            processWindow.ShowDialog();
 
             foreach(string item in selectedFilesLBx.Items)
             {
-                readExcelSheet(item);
+                processWindow.readExcelSheet(item);
             }
+            processWindow.ShowDialog();
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
@@ -402,6 +252,7 @@ namespace ExcelAssessmentIntegration
             this.Close();
         }
 
+        //which boxes are active and have a selected element is handled when changing criteria
         private void filterCriteriaGrpBx_CheckedChanged(object sender, EventArgs e)
         {
             if (noneRB.Checked == true)
@@ -410,6 +261,11 @@ namespace ExcelAssessmentIntegration
                 semesterCmBx.Enabled = false;
                 courseCmBx.Enabled = false;
                 sectionCmBx.Enabled = false;
+
+                yearCmBx.SelectedItem = null;
+                semesterCmBx.SelectedItem = null;
+                courseCmBx.SelectedItem = null;
+                sectionCmBx.SelectedItem = null;
             }
             if (yearRB.Checked == true)
             {
@@ -417,6 +273,10 @@ namespace ExcelAssessmentIntegration
                 semesterCmBx.Enabled = false;
                 courseCmBx.Enabled = false;
                 sectionCmBx.Enabled = false;
+
+                semesterCmBx.SelectedItem = null;
+                courseCmBx.SelectedItem = null;
+                sectionCmBx.SelectedItem = null;
             }
             if (semesterRB.Checked == true)
             {
@@ -424,6 +284,9 @@ namespace ExcelAssessmentIntegration
                 semesterCmBx.Enabled = true;
                 courseCmBx.Enabled = false;
                 sectionCmBx.Enabled = false;
+
+                courseCmBx.SelectedItem = null;
+                sectionCmBx.SelectedItem = null;
             }
             if (courseRB.Checked == true)
             {
@@ -431,6 +294,8 @@ namespace ExcelAssessmentIntegration
                 semesterCmBx.Enabled = true;
                 courseCmBx.Enabled = true;
                 sectionCmBx.Enabled = false;
+
+                sectionCmBx.SelectedItem = null;
             }
             if (sectionRB.Checked == true)
             {
