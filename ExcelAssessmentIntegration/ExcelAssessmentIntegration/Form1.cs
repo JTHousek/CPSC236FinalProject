@@ -28,6 +28,7 @@ namespace ExcelAssessmentIntegration
 
         private void loadAvailableFiles()
         {
+            const int FILENAMEDELIMITEDLENGTH = 4;
             FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
             string semesterSelected = "";
             String[] delimitedFileName;
@@ -36,23 +37,25 @@ namespace ExcelAssessmentIntegration
 
             foreach (FileInfo file in Files)
             {
-                if (!selectedFilesLBx.Items.Contains(file.Name))
+                if (!selectedFilesLBx.Items.Contains(file.Name)) //make sure if already selected it doesnt go into the files box
                 {
                     delimitedFileName = file.Name.Split('_');
-                    if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
-                    {
-                        if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
+                    if (delimitedFileName.Length == FILENAMEDELIMITEDLENGTH) {
+                        if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                         {
-                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                            semesterSelected = semesterSelected.ToLower();
-                        }
-                        if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
-                        {
-                            if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                            if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
                             {
-                                if (sectionCmBx.SelectedItem == null || delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
+                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                semesterSelected = semesterSelected.ToLower();
+                            }
+                            if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
+                            {
+                                if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                                 {
-                                    filesLBx.Items.Add(file.Name);
+                                    if (sectionCmBx.SelectedItem == null || delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
+                                    {
+                                        filesLBx.Items.Add(file.Name);
+                                    }
                                 }
                             }
                         }
@@ -161,19 +164,45 @@ namespace ExcelAssessmentIntegration
 
         private void AddAllBtn_Click(object sender, EventArgs e)
         {
-            foreach (var item in filesLBx.Items)
+            int numOfFiles = filesLBx.Items.Count;
+            for (int i = 0; i < numOfFiles; i++)
             {
-                selectedFilesLBx.Items.Add(filesLBx.Items);
-                filesLBx.Items.Remove(filesLBx.SelectedItem);
+                selectedFilesLBx.Items.Add(filesLBx.Items[0]);
+                filesLBx.Items.Remove(filesLBx.Items[0]);
             }
         }
 
         private void RemoveAllBtn_Click(object sender, EventArgs e)
         {
-            foreach (var item in filesLBx.Items)
+            int numOfFiles = selectedFilesLBx.Items.Count;
+            for (int i = 0; i < numOfFiles; i++)
             {
-                filesLBx.Items.Add(selectedFilesLBx.Items);
-                selectedFilesLBx.Items.Remove(selectedFilesLBx.SelectedItem);
+                filesLBx.Items.Add(selectedFilesLBx.Items[0]);
+                selectedFilesLBx.Items.Remove(selectedFilesLBx.Items[0]);
+            }
+        }
+
+        private void clearFilterCriteriaBtn_Click(object sender, EventArgs e)
+        {
+            FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
+            const int FILENAMEDELIMITEDLENGTH = 4;
+            String[] delimitedFileName;
+
+            yearCmBx.SelectedItem = null;
+            semesterCmBx.SelectedItem = null;
+            courseCmBx.SelectedItem = null;
+            semesterCmBx.SelectedItem = null;
+
+            foreach (FileInfo file in Files)
+            {
+                if (!selectedFilesLBx.Items.Contains(file.Name)) //make sure if already selected it doesnt go into the files box
+                {
+                    delimitedFileName = file.Name.Split('_');
+                    if (delimitedFileName.Length == FILENAMEDELIMITEDLENGTH)
+                    {
+                        filesLBx.Items.Add(file.Name);
+                    }
+                }
             }
         }
     }
