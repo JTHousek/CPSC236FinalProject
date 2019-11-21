@@ -1,13 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Xml.Linq;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -25,14 +17,27 @@ namespace ExcelAssessmentIntegration
             this.Close();
         }
 
-        //a method to load in requested excelsheets based on their path in the file system
-        public void readExcelSheet(string sheetPath)
+        public void displayObjectives(objNodeLL objectiveList)
         {
-            String objStr = "";
-            double numStudents = 0;
-            double maxScore = 0;
-            double actualScore = 0;
             double percentage = 0.0;
+            objNode currNode = new objNode();
+            currNode = objectiveList.getHead();
+
+            while (currNode != null)
+            {
+                outputObjLBx.Items.Add(currNode.getObjective());
+                outputNumLBx.Items.Add(currNode.getStudents().ToString());
+                percentage = (currNode.getActualScore() / currNode.getMaxScore()) * 100.00;
+                outputPercLBx.Items.Add(percentage.ToString("F2"));
+
+                currNode = currNode.getNextObjNode();
+            }
+
+        }
+
+        //a method to load in requested excelsheets based on their path in the file system
+        public void readExcelSheet(string sheetPath, int sheetNum, objNodeLL objectiveList)
+        {
             int rowCount = 0;
 
             //open excelApp and create the new application
@@ -68,121 +73,73 @@ namespace ExcelAssessmentIntegration
 
                 //find all valid cells
                 range = excelWorksheet.UsedRange;
-
-                //Number of rows
-                Console.WriteLine("Number of Rows: " + range.Rows.Count);
-
-                //Number of columns
-                Console.WriteLine("Rumber of Columns: " + range.Columns.Count);
-
-                for (rowCount = 1; rowCount <= range.Rows.Count; rowCount++)
+                if (range.Cells.Rows.Count != 0)
                 {
-                    objStr = range.Cells[rowCount, 1].Value2.ToString();
-                    outputObjLBx.Items.Add(objStr);
-                    numStudents = range.Cells[rowCount, 2].Value2;
-                    outputNumLBx.Items.Add(numStudents.ToString());
-                    maxScore = range.Cells[rowCount, 3].Value2;
-                    actualScore = range.Cells[rowCount, 4].Value2;
-                    percentage = (actualScore / maxScore) * 100.00;
-                    outputPercLBx.Items.Add(percentage.ToString("F2"));
 
+                    //Number of rows
+                    Console.WriteLine("Number of Rows: " + range.Rows.Count);
 
+                    //Number of columns
+                    Console.WriteLine("Rumber of Columns: " + range.Columns.Count);
 
-                    /*switch(objStr)
+                    if (sheetNum == 1) //if this is the first sheet read in
                     {
-                        case "objective1":
-                            if (range.Cells[rowCount, colCount].Value2 != null)
+                        objNode firstObj = new objNode();
+                        rowCount = 1;
+
+                        firstObj.setObjective(range.Cells[rowCount, 1].Value2.ToString());
+                        firstObj.setStudents(range.Cells[rowCount, 2].Value2);
+                        firstObj.setMaxScore(range.Cells[rowCount, 3].Value2);
+                        firstObj.setActualScore(range.Cells[rowCount, 4].Value2);
+
+                        objectiveList.setHead(firstObj);
+                        objectiveList.setTail(firstObj); //there is only one node in the list
+                    }
+
+                    for (rowCount = 1; rowCount <= range.Rows.Count; rowCount++)
+                    {
+                        if (sheetNum == 1 && rowCount == 1) //if this is the first sheet, skip the first row which is done above
+                        {
+                            continue; //skip iteration
+                        }
+
+                        bool foundFlag = false; //flags if there's a duplicate obj
+                        objNode newObj = new objNode();
+                        objNode currNode = objectiveList.getHead();
+
+                        newObj.setObjective(range.Cells[rowCount, 1].Value2.ToString());
+                        newObj.setStudents(range.Cells[rowCount, 2].Value2);
+                        newObj.setMaxScore(range.Cells[rowCount, 3].Value2);
+                        newObj.setActualScore(range.Cells[rowCount, 4].Value2);
+
+                        while (currNode != null)
+                        {
+                            if (currNode.getObjective() == newObj.getObjective())
                             {
-                                str = range.Cells[rowCount, colCount].Value2.ToString();
-                                if (int.TryParse(str, out convVal))
-                                {
-                                    switch(colCount)
-                                    {
-                                        case 2:
-                                            obj1.setStudents(obj1.getStudents() + convVal);
-                                            break;
-
-                                        case 3:
-                                            obj1.setStudents(obj1.getMaxScore() + convVal);
-                                            break;
-
-                                        case 4:
-                                            obj1.setStudents(obj1.getActualScore() + convVal);
-                                            break;
-
-                                        default:
-                                            MessageBox.Show("no");
-                                            break;
-                                    }
-                                }
-
+                                currNode.setStudents(currNode.getStudents() + newObj.getStudents());
+                                currNode.setMaxScore(currNode.getMaxScore() + newObj.getMaxScore());
+                                currNode.setActualScore(currNode.getActualScore() + newObj.getActualScore());
+                                foundFlag = true;
+                                break; //the node was found, break the search
                             }
-                            break;
-                        case "objective2":
-                            if (range.Cells[rowCount, colCount].Value2 != null)
-                            {
-                                str = range.Cells[rowCount, colCount].Value2.ToString();
-                                if (int.TryParse(str, out convVal))
-                                {
-                                    switch (colCount)
-                                    {
-                                        case 2:
-                                            obj2.setStudents(obj2.getStudents() + convVal);
-                                            break;
+                            currNode = currNode.getNextObjNode();
+                        }
 
-                                        case 3:
-                                            obj2.setStudents(obj2.getMaxScore() + convVal);
-                                            break;
+                        if (!foundFlag)
+                        {
+                            objectiveList.getTail().setNextObjNode(newObj);
+                            objectiveList.setTail(newObj); //set a new tail for the list 
+                        }
+                    }
 
-                                        case 4:
-                                            obj2.setStudents(obj2.getActualScore() + convVal);
-                                            break;
-
-                                        default:
-                                            MessageBox.Show("no");
-                                            break;
-                                    }
-                                }
-
-                            }
-                            break;
-                        case "objective3":
-                            if (range.Cells[rowCount, colCount].Value2 != null)
-                            {
-                                str = range.Cells[rowCount, colCount].Value2.ToString();
-                                if (int.TryParse(str, out convVal))
-                                {
-                                    switch (colCount)
-                                    {
-                                        case 2:
-                                            obj3.setStudents(obj3.getStudents() + convVal);
-                                            break;
-
-                                        case 3:
-                                            obj3.setStudents(obj3.getMaxScore() + convVal);
-                                            break;
-
-                                        case 4:
-                                            obj3.setStudents(obj3.getActualScore() + convVal);
-                                            break;
-
-                                        default:
-                                            MessageBox.Show("no");
-                                            break;
-                                    }
-                                }
-                            }
-                            break;
-                    }*/
-
-
+                    //close
+                    excelWorkbook.Close(true, null, null);
+                    excelApp.Quit();
                 }
-                //MessageBox.Show(obj1.getStudents().ToString());
-
-                //close
-                excelWorkbook.Close(true, null, null);
-                excelApp.Quit();
-
+                else
+                {
+                    MessageBox.Show("empty spreadsheet");
+                }
 
             }
             catch (FileNotFoundException ex)

@@ -15,9 +15,6 @@ namespace ExcelAssessmentIntegration
     public partial class ExcelIntegrationAssessmentWindow : Form
     {
         System.IO.DirectoryInfo dataFilesDir = new System.IO.DirectoryInfo("..\\dataSheets\\");
-        private Node obj1 = new Node();
-        private Node obj2 = new Node();
-        private Node obj3 = new Node();
         public ExcelIntegrationAssessmentWindow()
         {
             InitializeComponent();
@@ -239,11 +236,16 @@ namespace ExcelAssessmentIntegration
         {
             //this needs to make sure there isn't one already open
             ProcessedWindow processWindow = new ProcessedWindow();
+            int sheetNum = 1; //used to verify which sheet is first to set LL head
+            objNodeLL objectiveList = new objNodeLL();
 
             foreach(string item in selectedFilesLBx.Items)
             {
-                processWindow.readExcelSheet(item);
+                processWindow.readExcelSheet(item, sheetNum, objectiveList);
+                sheetNum++; //increment number of sheets
             }
+
+            processWindow.displayObjectives(objectiveList);
             processWindow.ShowDialog();
         }
 
@@ -306,66 +308,5 @@ namespace ExcelAssessmentIntegration
             }
 
         }
-
-        private void pullDataIntoArray(String excelInfoGet, int indexAtPass)
-        {
-            switch(excelInfoGet)
-            {
-                case "objective1":
-                    break;
-                case "objective2":
-                    break;
-                case "objective3":
-                    break;              
-                default:
-                    break;
-            }
-        }
-    }
-}
-
-public class Node
-{
-    private Node objective;
-    private int students;
-    private int maxScore;
-    private int actualScore;
-
-    public Node()
-    {
-        objective = null;
-        students = 0;
-        maxScore = 0;
-        actualScore = 0;
-    }
-
-    public void setStudents(int studentVal)
-    {
-        students = studentVal;
-    }
-
-    public int getStudents()
-    {
-        return students;
-    }
-
-    public void setMaxScore(int scoreMax)
-    {
-        maxScore = scoreMax;
-    }
-
-    public int getMaxScore()
-    {
-        return maxScore;
-    }
-
-    public void setActualScore(int studentActual)
-    {
-        actualScore = studentActual;
-    }
-
-    public int getActualScore()
-    {
-        return actualScore;
     }
 }
