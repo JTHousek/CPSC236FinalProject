@@ -34,7 +34,6 @@ namespace ExcelAssessmentIntegration
             String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
             filesLBx.Items.Clear();
-            //MessageBox.Show(filesCount.ToString());
 
             if (noneRB.Checked)
             {
@@ -176,14 +175,16 @@ namespace ExcelAssessmentIntegration
                 semesters.AddRange((from elem in element.Descendants("semester") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
                 courses.AddRange((from elem in element.Descendants("course") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
                 section.AddRange((from elem in element.Descendants("section") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
+                Int32.TryParse(year.ElementAt(0).Value, out maxYear);
+                Int32.TryParse(section.ElementAt(0).Value, out maxSection);
             }
             catch (FileNotFoundException ex)
             {
+                consoleOutputTxB.Visible = true;
+                consoleBxLB.Visible = true;
                 consoleOutputTxB.AppendText("ERROR: XML FILE NOT READ, Exception: " + ex.GetType() + "\n");
             }
 
-            Int32.TryParse(year.ElementAt(0).Value, out maxYear);
-            Int32.TryParse(section.ElementAt(0).Value, out maxSection);
             //load the years combo box based on the max year provided
             for (int i = 2000; i <= maxYear; i++)
             {

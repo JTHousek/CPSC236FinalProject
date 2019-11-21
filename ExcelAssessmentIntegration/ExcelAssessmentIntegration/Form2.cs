@@ -50,8 +50,6 @@ namespace ExcelAssessmentIntegration
             //range variable
             Excel.Range range;
 
-            //make excel visible to the user
-            excelApp.Visible = true;
             String path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
             //change
@@ -73,15 +71,8 @@ namespace ExcelAssessmentIntegration
 
                 //find all valid cells
                 range = excelWorksheet.UsedRange;
-                if (range.Cells.Rows.Count != 0)
+                try
                 {
-
-                    //Number of rows
-                    Console.WriteLine("Number of Rows: " + range.Rows.Count);
-
-                    //Number of columns
-                    Console.WriteLine("Rumber of Columns: " + range.Columns.Count);
-
                     if (sheetNum == 1) //if this is the first sheet read in
                     {
                         objNode firstObj = new objNode();
@@ -136,11 +127,12 @@ namespace ExcelAssessmentIntegration
                     excelWorkbook.Close(true, null, null);
                     excelApp.Quit();
                 }
-                else
+                catch (Exception ex)
                 {
                     MessageBox.Show("empty spreadsheet");
+                    excelWorkbook.Close(true, null, null);
+                    excelApp.Quit();
                 }
-
             }
             catch (FileNotFoundException ex)
             {
