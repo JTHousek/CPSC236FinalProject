@@ -129,7 +129,6 @@ namespace ExcelAssessmentIntegration
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("empty spreadsheet");
                     excelWorkbook.Close(true, null, null);
                     excelApp.Quit();
                 }

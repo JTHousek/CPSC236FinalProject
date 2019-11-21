@@ -51,11 +51,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.AddAllBtn = new System.Windows.Forms.Button();
             this.RemoveAllBtn = new System.Windows.Forms.Button();
+            this.clearFilterCriteriaBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // semesterCmBx
             // 
-            this.semesterCmBx.Enabled = false;
+            this.semesterCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.semesterCmBx.FormattingEnabled = true;
             this.semesterCmBx.Location = new System.Drawing.Point(70, 190);
             this.semesterCmBx.Name = "semesterCmBx";
@@ -64,7 +65,7 @@
             // 
             // courseCmBx
             // 
-            this.courseCmBx.Enabled = false;
+            this.courseCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.courseCmBx.FormattingEnabled = true;
             this.courseCmBx.Location = new System.Drawing.Point(70, 220);
             this.courseCmBx.Name = "courseCmBx";
@@ -161,7 +162,7 @@
             // 
             // yearCmBx
             // 
-            this.yearCmBx.Enabled = false;
+            this.yearCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.yearCmBx.FormattingEnabled = true;
             this.yearCmBx.Location = new System.Drawing.Point(70, 161);
             this.yearCmBx.Name = "yearCmBx";
@@ -170,7 +171,7 @@
             // 
             // sectionCmBx
             // 
-            this.sectionCmBx.Enabled = false;
+            this.sectionCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sectionCmBx.FormattingEnabled = true;
             this.sectionCmBx.Location = new System.Drawing.Point(70, 250);
             this.sectionCmBx.Name = "sectionCmBx";
@@ -199,7 +200,7 @@
             // 
             this.filterBtn.Location = new System.Drawing.Point(15, 281);
             this.filterBtn.Name = "filterBtn";
-            this.filterBtn.Size = new System.Drawing.Size(175, 19);
+            this.filterBtn.Size = new System.Drawing.Size(175, 22);
             this.filterBtn.TabIndex = 24;
             this.filterBtn.Text = "Filter";
             this.filterBtn.UseVisualStyleBackColor = true;
@@ -246,7 +247,7 @@
             // AddAllBtn
             // 
             this.AddAllBtn.Location = new System.Drawing.Point(304, 58);
-            this.AddAllBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AddAllBtn.Margin = new System.Windows.Forms.Padding(2);
             this.AddAllBtn.Name = "AddAllBtn";
             this.AddAllBtn.Size = new System.Drawing.Size(33, 23);
             this.AddAllBtn.TabIndex = 29;
@@ -257,7 +258,7 @@
             // RemoveAllBtn
             // 
             this.RemoveAllBtn.Location = new System.Drawing.Point(304, 114);
-            this.RemoveAllBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RemoveAllBtn.Margin = new System.Windows.Forms.Padding(2);
             this.RemoveAllBtn.Name = "RemoveAllBtn";
             this.RemoveAllBtn.Size = new System.Drawing.Size(33, 23);
             this.RemoveAllBtn.TabIndex = 30;
@@ -265,14 +266,25 @@
             this.RemoveAllBtn.UseVisualStyleBackColor = true;
             this.RemoveAllBtn.Click += new System.EventHandler(this.RemoveAllBtn_Click);
             // 
+            // clearFilterCriteriaBtn
+            // 
+            this.clearFilterCriteriaBtn.Location = new System.Drawing.Point(15, 310);
+            this.clearFilterCriteriaBtn.Name = "clearFilterCriteriaBtn";
+            this.clearFilterCriteriaBtn.Size = new System.Drawing.Size(176, 23);
+            this.clearFilterCriteriaBtn.TabIndex = 31;
+            this.clearFilterCriteriaBtn.Text = "Clear Filter Criteria";
+            this.clearFilterCriteriaBtn.UseVisualStyleBackColor = true;
+            this.clearFilterCriteriaBtn.Click += new System.EventHandler(this.clearFilterCriteriaBtn_Click);
+            // 
             // ExcelIntegrationAssessmentWindow
             // 
             this.AcceptButton = this.readExcelBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(650, 324);
+            this.ClientSize = new System.Drawing.Size(650, 346);
             this.ControlBox = false;
+            this.Controls.Add(this.clearFilterCriteriaBtn);
             this.Controls.Add(this.RemoveAllBtn);
             this.Controls.Add(this.AddAllBtn);
             this.Controls.Add(this.label6);
@@ -328,6 +340,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button AddAllBtn;
         private System.Windows.Forms.Button RemoveAllBtn;
+        private System.Windows.Forms.Button clearFilterCriteriaBtn;
     }
 }
 
