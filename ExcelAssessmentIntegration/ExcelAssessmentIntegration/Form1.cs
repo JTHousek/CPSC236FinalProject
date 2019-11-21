@@ -29,131 +29,35 @@ namespace ExcelAssessmentIntegration
         private void loadAvailableFiles()
         {
             FileInfo[] Files = dataFilesDir.GetFiles("*.xlsx"); //Getting Text files
-            int filterType = 1; //none by default for when the form first loads
             string semesterSelected = "";
             String[] delimitedFileName;
             int filesCount = dataFilesDir.GetFiles().Length;
             filesLBx.Items.Clear();
 
-            if (noneRB.Checked)
+            foreach (FileInfo file in Files)
             {
-                filterType = 1;
-            }
-            if (yearRB.Checked)
-            {
-                filterType = 2;
-            }
-            if (semesterRB.Checked)
-            {
-                filterType = 3;
-            }
-            if (courseRB.Checked)
-            {
-                filterType = 4;
-            }
-            if (sectionRB.Checked)
-            {
-                filterType = 5;
-            }
-
-            switch (filterType)
-            {
-                case 1: //filter by nothing    
-                    foreach (FileInfo file in Files)
+                if (!selectedFilesLBx.Items.Contains(file.Name))
+                {
+                    delimitedFileName = file.Name.Split('_');
+                    if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
                     {
-                        if (!selectedFilesLBx.Items.Contains(file.Name)) //if file is already selected, don't add
-                        { 
-                            filesLBx.Items.Add(file.Name);
-                        }
-                    }
-                    break;
-
-                case 2: //filter by year 
-                    foreach (FileInfo file in Files)
-                    {
-                        if (!selectedFilesLBx.Items.Contains(file.Name))
+                        if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
                         {
-                            delimitedFileName = file.Name.Split('_');
-                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString()) //removes the xml insertion artifacting
-                            {
-                                filesLBx.Items.Add(file.Name);
-                            }
+                            semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                            semesterSelected = semesterSelected.ToLower();
                         }
-                    }
-                    break;
-
-                case 3: //filter by semester
-                    foreach (FileInfo file in Files)
-                    {
-                        if (!selectedFilesLBx.Items.Contains(file.Name)) { 
-                            delimitedFileName = file.Name.Split('_');
-                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
+                        if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
+                        {
+                            if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
                             {
-                                if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
-                                {
-                                    semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                                    semesterSelected = semesterSelected.ToLower();
-                                }
-                                if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
+                                if (sectionCmBx.SelectedItem == null || delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
                                 {
                                     filesLBx.Items.Add(file.Name);
                                 }
                             }
                         }
                     }
-                    break;
-
-                case 4: //filter by course
-                    foreach (FileInfo file in Files)
-                    {
-                        if (!selectedFilesLBx.Items.Contains(file.Name)) { 
-                            delimitedFileName = file.Name.Split('_');
-                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
-                            {
-                                if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
-                                {
-                                    semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                                    semesterSelected = semesterSelected.ToLower();
-                                }
-                                if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
-                                {
-                                    if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
-                                    {
-                                        filesLBx.Items.Add(file.Name);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    break;
-
-                case 5: //filter by section
-                    foreach (FileInfo file in Files)
-                    {
-                        if (!selectedFilesLBx.Items.Contains(file.Name))
-                        {
-                            delimitedFileName = file.Name.Split('_');
-                            if (yearCmBx.SelectedItem == null || delimitedFileName[0] == yearCmBx.SelectedItem.ToString())
-                            {
-                                if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
-                                {
-                                    semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
-                                    semesterSelected = semesterSelected.ToLower();
-                                }
-                                if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
-                                {
-                                    if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
-                                    {
-                                        if (sectionCmBx.SelectedItem == null || delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
-                                        {
-                                            filesLBx.Items.Add(file.Name);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    break;
+                }
             }
 
         }
@@ -171,7 +75,7 @@ namespace ExcelAssessmentIntegration
             try
             {
                 element = XElement.Load("..\\startup.xml");
-                year.AddRange((from elem in element.Descendants("year") select new KeyValuePair<int, string>((int) elem.Attribute("key"), (string) elem.Attribute("value"))));
+                year.AddRange((from elem in element.Descendants("year") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
                 semesters.AddRange((from elem in element.Descendants("semester") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
                 courses.AddRange((from elem in element.Descendants("course") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
                 section.AddRange((from elem in element.Descendants("section") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
@@ -209,10 +113,10 @@ namespace ExcelAssessmentIntegration
             courseCmBx.SelectedItem = null;
             semesterCmBx.SelectedItem = null;
         }
-        
+
         private void AddSheetBtn_Click(object sender, EventArgs e) //add a sheet to the selected listbox
         {
-            if(filesLBx.SelectedItem != null) //verify that something is selected 
+            if (filesLBx.SelectedItem != null) //verify that something is selected 
             {
                 selectedFilesLBx.Items.Add(filesLBx.SelectedItem);
                 filesLBx.Items.Remove(filesLBx.SelectedItem);
@@ -240,7 +144,7 @@ namespace ExcelAssessmentIntegration
             int sheetNum = 1; //used to verify which sheet is first to set LL head
             objNodeLL objectiveList = new objNodeLL();
 
-            foreach(string item in selectedFilesLBx.Items)
+            foreach (string item in selectedFilesLBx.Items)
             {
                 processWindow.readExcelSheet(item, sheetNum, objectiveList);
                 sheetNum++; //increment number of sheets
@@ -255,59 +159,22 @@ namespace ExcelAssessmentIntegration
             this.Close();
         }
 
-        //which boxes are active and have a selected element is handled when changing criteria
-        private void filterCriteriaGrpBx_CheckedChanged(object sender, EventArgs e)
+        private void AddAllBtn_Click(object sender, EventArgs e)
         {
-            if (noneRB.Checked == true)
+            foreach (var item in filesLBx.Items)
             {
-                yearCmBx.Enabled = false;
-                semesterCmBx.Enabled = false;
-                courseCmBx.Enabled = false;
-                sectionCmBx.Enabled = false;
-
-                yearCmBx.SelectedItem = null;
-                semesterCmBx.SelectedItem = null;
-                courseCmBx.SelectedItem = null;
-                sectionCmBx.SelectedItem = null;
+                selectedFilesLBx.Items.Add(filesLBx.Items);
+                filesLBx.Items.Remove(filesLBx.SelectedItem);
             }
-            if (yearRB.Checked == true)
+        }
+
+        private void RemoveAllBtn_Click(object sender, EventArgs e)
+        {
+            foreach (var item in filesLBx.Items)
             {
-                yearCmBx.Enabled = true;
-                semesterCmBx.Enabled = false;
-                courseCmBx.Enabled = false;
-                sectionCmBx.Enabled = false;
-
-                semesterCmBx.SelectedItem = null;
-                courseCmBx.SelectedItem = null;
-                sectionCmBx.SelectedItem = null;
+                filesLBx.Items.Add(selectedFilesLBx.Items);
+                selectedFilesLBx.Items.Remove(selectedFilesLBx.SelectedItem);
             }
-            if (semesterRB.Checked == true)
-            {
-                yearCmBx.Enabled = true;
-                semesterCmBx.Enabled = true;
-                courseCmBx.Enabled = false;
-                sectionCmBx.Enabled = false;
-
-                courseCmBx.SelectedItem = null;
-                sectionCmBx.SelectedItem = null;
-            }
-            if (courseRB.Checked == true)
-            {
-                yearCmBx.Enabled = true;
-                semesterCmBx.Enabled = true;
-                courseCmBx.Enabled = true;
-                sectionCmBx.Enabled = false;
-
-                sectionCmBx.SelectedItem = null;
-            }
-            if (sectionRB.Checked == true)
-            {
-                yearCmBx.Enabled = true;
-                semesterCmBx.Enabled = true;
-                courseCmBx.Enabled = true;
-                sectionCmBx.Enabled = true;
-            }
-
         }
     }
 }

@@ -29,12 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExcelIntegrationAssessmentWindow));
-            this.filterCriteriaGrpBx = new System.Windows.Forms.GroupBox();
-            this.noneRB = new System.Windows.Forms.RadioButton();
-            this.sectionRB = new System.Windows.Forms.RadioButton();
-            this.courseRB = new System.Windows.Forms.RadioButton();
-            this.semesterRB = new System.Windows.Forms.RadioButton();
-            this.yearRB = new System.Windows.Forms.RadioButton();
             this.semesterCmBx = new System.Windows.Forms.ComboBox();
             this.courseCmBx = new System.Windows.Forms.ComboBox();
             this.readExcelBtn = new System.Windows.Forms.Button();
@@ -55,87 +49,15 @@
             this.removeSheetBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.filterCriteriaGrpBx.SuspendLayout();
+            this.AddAllBtn = new System.Windows.Forms.Button();
+            this.RemoveAllBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // filterCriteriaGrpBx
-            // 
-            this.filterCriteriaGrpBx.Controls.Add(this.noneRB);
-            this.filterCriteriaGrpBx.Controls.Add(this.sectionRB);
-            this.filterCriteriaGrpBx.Controls.Add(this.courseRB);
-            this.filterCriteriaGrpBx.Controls.Add(this.semesterRB);
-            this.filterCriteriaGrpBx.Controls.Add(this.yearRB);
-            this.filterCriteriaGrpBx.Location = new System.Drawing.Point(12, 152);
-            this.filterCriteriaGrpBx.Name = "filterCriteriaGrpBx";
-            this.filterCriteriaGrpBx.Size = new System.Drawing.Size(106, 141);
-            this.filterCriteriaGrpBx.TabIndex = 1;
-            this.filterCriteriaGrpBx.TabStop = false;
-            this.filterCriteriaGrpBx.Text = "Filter Criteria";
-            // 
-            // noneRB
-            // 
-            this.noneRB.AutoSize = true;
-            this.noneRB.Location = new System.Drawing.Point(6, 19);
-            this.noneRB.Name = "noneRB";
-            this.noneRB.Size = new System.Drawing.Size(51, 17);
-            this.noneRB.TabIndex = 0;
-            this.noneRB.TabStop = true;
-            this.noneRB.Text = "None";
-            this.noneRB.UseVisualStyleBackColor = true;
-            // 
-            // sectionRB
-            // 
-            this.sectionRB.AutoSize = true;
-            this.sectionRB.Location = new System.Drawing.Point(6, 111);
-            this.sectionRB.Name = "sectionRB";
-            this.sectionRB.Size = new System.Drawing.Size(61, 17);
-            this.sectionRB.TabIndex = 3;
-            this.sectionRB.TabStop = true;
-            this.sectionRB.Text = "Section";
-            this.sectionRB.UseVisualStyleBackColor = true;
-            this.sectionRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
-            // 
-            // courseRB
-            // 
-            this.courseRB.AutoSize = true;
-            this.courseRB.Location = new System.Drawing.Point(6, 88);
-            this.courseRB.Name = "courseRB";
-            this.courseRB.Size = new System.Drawing.Size(58, 17);
-            this.courseRB.TabIndex = 2;
-            this.courseRB.TabStop = true;
-            this.courseRB.Text = "Course";
-            this.courseRB.UseVisualStyleBackColor = true;
-            this.courseRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
-            // 
-            // semesterRB
-            // 
-            this.semesterRB.AutoSize = true;
-            this.semesterRB.Location = new System.Drawing.Point(6, 65);
-            this.semesterRB.Name = "semesterRB";
-            this.semesterRB.Size = new System.Drawing.Size(69, 17);
-            this.semesterRB.TabIndex = 1;
-            this.semesterRB.TabStop = true;
-            this.semesterRB.Text = "Semester";
-            this.semesterRB.UseVisualStyleBackColor = true;
-            this.semesterRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
-            // 
-            // yearRB
-            // 
-            this.yearRB.AutoSize = true;
-            this.yearRB.Location = new System.Drawing.Point(6, 42);
-            this.yearRB.Name = "yearRB";
-            this.yearRB.Size = new System.Drawing.Size(47, 17);
-            this.yearRB.TabIndex = 0;
-            this.yearRB.TabStop = true;
-            this.yearRB.Text = "Year";
-            this.yearRB.UseVisualStyleBackColor = true;
-            this.yearRB.CheckedChanged += new System.EventHandler(this.filterCriteriaGrpBx_CheckedChanged);
             // 
             // semesterCmBx
             // 
             this.semesterCmBx.Enabled = false;
             this.semesterCmBx.FormattingEnabled = true;
-            this.semesterCmBx.Location = new System.Drawing.Point(276, 171);
+            this.semesterCmBx.Location = new System.Drawing.Point(70, 190);
             this.semesterCmBx.Name = "semesterCmBx";
             this.semesterCmBx.Size = new System.Drawing.Size(121, 21);
             this.semesterCmBx.TabIndex = 3;
@@ -144,7 +66,7 @@
             // 
             this.courseCmBx.Enabled = false;
             this.courseCmBx.FormattingEnabled = true;
-            this.courseCmBx.Location = new System.Drawing.Point(417, 171);
+            this.courseCmBx.Location = new System.Drawing.Point(70, 220);
             this.courseCmBx.Name = "courseCmBx";
             this.courseCmBx.Size = new System.Drawing.Size(121, 21);
             this.courseCmBx.TabIndex = 4;
@@ -152,9 +74,9 @@
             // readExcelBtn
             // 
             this.readExcelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.readExcelBtn.Location = new System.Drawing.Point(234, 234);
+            this.readExcelBtn.Location = new System.Drawing.Point(349, 161);
             this.readExcelBtn.Name = "readExcelBtn";
-            this.readExcelBtn.Size = new System.Drawing.Size(136, 23);
+            this.readExcelBtn.Size = new System.Drawing.Size(121, 23);
             this.readExcelBtn.TabIndex = 6;
             this.readExcelBtn.Text = "Read Excel Sheets";
             this.readExcelBtn.UseVisualStyleBackColor = true;
@@ -163,9 +85,9 @@
             // cancelBtn
             // 
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBtn.Location = new System.Drawing.Point(417, 234);
+            this.cancelBtn.Location = new System.Drawing.Point(507, 161);
             this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(136, 23);
+            this.cancelBtn.Size = new System.Drawing.Size(121, 23);
             this.cancelBtn.TabIndex = 7;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
@@ -174,17 +96,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(133, 152);
+            this.label1.Location = new System.Drawing.Point(12, 163);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.Size = new System.Drawing.Size(29, 13);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Year (Format: YY)";
+            this.label1.Text = "Year";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(273, 152);
+            this.label2.Location = new System.Drawing.Point(12, 192);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(51, 13);
@@ -194,7 +116,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(414, 152);
+            this.label3.Location = new System.Drawing.Point(12, 222);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
@@ -204,12 +126,12 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(559, 152);
+            this.label4.Location = new System.Drawing.Point(12, 252);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 13);
+            this.label4.Size = new System.Drawing.Size(43, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Section (Format: SS)";
+            this.label4.Text = "Section";
             // 
             // consoleBoxLB
             // 
@@ -221,7 +143,7 @@
             // consoleBxLB
             // 
             this.consoleBxLB.AutoSize = true;
-            this.consoleBxLB.Location = new System.Drawing.Point(443, 279);
+            this.consoleBxLB.Location = new System.Drawing.Point(389, 233);
             this.consoleBxLB.Name = "consoleBxLB";
             this.consoleBxLB.Size = new System.Drawing.Size(45, 13);
             this.consoleBxLB.TabIndex = 17;
@@ -230,7 +152,7 @@
             // 
             // consoleOutputTxB
             // 
-            this.consoleOutputTxB.Location = new System.Drawing.Point(446, 295);
+            this.consoleOutputTxB.Location = new System.Drawing.Point(392, 250);
             this.consoleOutputTxB.Multiline = true;
             this.consoleOutputTxB.Name = "consoleOutputTxB";
             this.consoleOutputTxB.Size = new System.Drawing.Size(237, 53);
@@ -241,7 +163,7 @@
             // 
             this.yearCmBx.Enabled = false;
             this.yearCmBx.FormattingEnabled = true;
-            this.yearCmBx.Location = new System.Drawing.Point(136, 171);
+            this.yearCmBx.Location = new System.Drawing.Point(70, 161);
             this.yearCmBx.Name = "yearCmBx";
             this.yearCmBx.Size = new System.Drawing.Size(121, 21);
             this.yearCmBx.TabIndex = 20;
@@ -250,7 +172,7 @@
             // 
             this.sectionCmBx.Enabled = false;
             this.sectionCmBx.FormattingEnabled = true;
-            this.sectionCmBx.Location = new System.Drawing.Point(562, 171);
+            this.sectionCmBx.Location = new System.Drawing.Point(70, 250);
             this.sectionCmBx.Name = "sectionCmBx";
             this.sectionCmBx.Size = new System.Drawing.Size(121, 21);
             this.sectionCmBx.TabIndex = 21;
@@ -267,7 +189,7 @@
             // selectedFilesLBx
             // 
             this.selectedFilesLBx.FormattingEnabled = true;
-            this.selectedFilesLBx.Location = new System.Drawing.Point(410, 25);
+            this.selectedFilesLBx.Location = new System.Drawing.Point(349, 25);
             this.selectedFilesLBx.Name = "selectedFilesLBx";
             this.selectedFilesLBx.Size = new System.Drawing.Size(280, 121);
             this.selectedFilesLBx.TabIndex = 23;
@@ -275,9 +197,9 @@
             // 
             // filterBtn
             // 
-            this.filterBtn.Location = new System.Drawing.Point(325, 205);
+            this.filterBtn.Location = new System.Drawing.Point(15, 281);
             this.filterBtn.Name = "filterBtn";
-            this.filterBtn.Size = new System.Drawing.Size(136, 23);
+            this.filterBtn.Size = new System.Drawing.Size(175, 19);
             this.filterBtn.TabIndex = 24;
             this.filterBtn.Text = "Filter";
             this.filterBtn.UseVisualStyleBackColor = true;
@@ -285,21 +207,21 @@
             // 
             // addSheetBtn
             // 
-            this.addSheetBtn.Location = new System.Drawing.Point(309, 38);
+            this.addSheetBtn.Location = new System.Drawing.Point(304, 31);
             this.addSheetBtn.Name = "addSheetBtn";
-            this.addSheetBtn.Size = new System.Drawing.Size(75, 23);
+            this.addSheetBtn.Size = new System.Drawing.Size(33, 23);
             this.addSheetBtn.TabIndex = 25;
-            this.addSheetBtn.Text = "Add >>";
+            this.addSheetBtn.Text = ">";
             this.addSheetBtn.UseVisualStyleBackColor = true;
             this.addSheetBtn.Click += new System.EventHandler(this.AddSheetBtn_Click);
             // 
             // removeSheetBtn
             // 
-            this.removeSheetBtn.Location = new System.Drawing.Point(309, 79);
+            this.removeSheetBtn.Location = new System.Drawing.Point(304, 86);
             this.removeSheetBtn.Name = "removeSheetBtn";
-            this.removeSheetBtn.Size = new System.Drawing.Size(75, 23);
+            this.removeSheetBtn.Size = new System.Drawing.Size(33, 23);
             this.removeSheetBtn.TabIndex = 26;
-            this.removeSheetBtn.Text = "<< Remove";
+            this.removeSheetBtn.Text = "<";
             this.removeSheetBtn.UseVisualStyleBackColor = true;
             this.removeSheetBtn.Click += new System.EventHandler(this.RemoveSheetBtn_Click);
             // 
@@ -315,11 +237,33 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(410, 9);
+            this.label6.Location = new System.Drawing.Point(349, 9);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(143, 13);
             this.label6.TabIndex = 28;
             this.label6.Text = "Selected Files for Processing";
+            // 
+            // AddAllBtn
+            // 
+            this.AddAllBtn.Location = new System.Drawing.Point(304, 58);
+            this.AddAllBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AddAllBtn.Name = "AddAllBtn";
+            this.AddAllBtn.Size = new System.Drawing.Size(33, 23);
+            this.AddAllBtn.TabIndex = 29;
+            this.AddAllBtn.Text = ">>";
+            this.AddAllBtn.UseVisualStyleBackColor = true;
+            this.AddAllBtn.Click += new System.EventHandler(this.AddAllBtn_Click);
+            // 
+            // RemoveAllBtn
+            // 
+            this.RemoveAllBtn.Location = new System.Drawing.Point(304, 114);
+            this.RemoveAllBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RemoveAllBtn.Name = "RemoveAllBtn";
+            this.RemoveAllBtn.Size = new System.Drawing.Size(33, 23);
+            this.RemoveAllBtn.TabIndex = 30;
+            this.RemoveAllBtn.Text = "<<";
+            this.RemoveAllBtn.UseVisualStyleBackColor = true;
+            this.RemoveAllBtn.Click += new System.EventHandler(this.RemoveAllBtn_Click);
             // 
             // ExcelIntegrationAssessmentWindow
             // 
@@ -327,8 +271,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(706, 362);
+            this.ClientSize = new System.Drawing.Size(650, 324);
             this.ControlBox = false;
+            this.Controls.Add(this.RemoveAllBtn);
+            this.Controls.Add(this.AddAllBtn);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.removeSheetBtn);
@@ -349,26 +295,17 @@
             this.Controls.Add(this.readExcelBtn);
             this.Controls.Add(this.courseCmBx);
             this.Controls.Add(this.semesterCmBx);
-            this.Controls.Add(this.filterCriteriaGrpBx);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ExcelIntegrationAssessmentWindow";
             this.Text = "Excel Integration Assessment";
             this.Load += new System.EventHandler(this.formOnLoad);
-            this.filterCriteriaGrpBx.ResumeLayout(false);
-            this.filterCriteriaGrpBx.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox filterCriteriaGrpBx;
-        private System.Windows.Forms.RadioButton sectionRB;
-        private System.Windows.Forms.RadioButton courseRB;
-        private System.Windows.Forms.RadioButton semesterRB;
-        private System.Windows.Forms.RadioButton yearRB;
         private System.Windows.Forms.ComboBox semesterCmBx;
         private System.Windows.Forms.ComboBox courseCmBx;
         private System.Windows.Forms.Button readExcelBtn;
@@ -377,7 +314,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RadioButton noneRB;
         private System.Windows.Forms.Label consoleBoxLB;
         private System.Windows.Forms.Label consoleBxLB;
         private System.Windows.Forms.TextBox consoleOutputTxB;
@@ -390,6 +326,8 @@
         private System.Windows.Forms.Button removeSheetBtn;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button AddAllBtn;
+        private System.Windows.Forms.Button RemoveAllBtn;
     }
 }
 
