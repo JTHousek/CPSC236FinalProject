@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<filterCriteria>
+	<maxYear>
+		<!-- Maximum Value for Years -->
+		<year>2019</year>
+	</maxYear>
+	<semesters>
+		<!-- Available Semesters -->
+		<semester>Fall</semester>
+		<semester>Winter</semester>
+		<semester>Spring</semester>
+		<semester>Summer</semester>
+	</semesters>
+	<courses>
+		<!-- Available Courses -->
+		<course>CPSC130</course>
+		<course>CPSC146</course>
+		<course>CPSC207</course>
+		<course>CPSC217</course>
+		<course>CPSC236</course>	
+		<course>CPSC246</course>
+		<course>CPSC300</course>
+		<course>CPSC311</course>
+		<course>CPSC323</course>
+		<course>CPSC327</course>
+		<course>CPSC423</course>
+		<course>CPSC427</course>
+		<course>CPSC488</course>
+	</courses>
+	<maxSection>
+		<!-- Maximum Value for Sections -->
+		<section>4</section>
+	</maxSection>
+</filterCriteria>

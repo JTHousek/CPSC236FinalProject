@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -23,7 +24,8 @@ namespace ExcelAssessmentIntegration
         private void formOnLoad(object sender, EventArgs e)
         {
             loadAvailableFiles();
-            startupXMLLoad();
+            criteriaXMLLoad();
+            //objectiveXMLLoad();
         }
 
         private void loadAvailableFiles()
@@ -45,12 +47,12 @@ namespace ExcelAssessmentIntegration
                         {
                             if (semesterCmBx.SelectedItem != null) //as long as a semester is selected
                             {
-                                semesterSelected = semesterCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0];
+                                semesterSelected = semesterCmBx.SelectedItem.ToString().Trim();
                                 semesterSelected = semesterSelected.ToLower();
                             }
                             if (semesterCmBx.SelectedItem == null || delimitedFileName[1] == semesterSelected)
                             {
-                                if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Split(',')[1].Trim().Split(']')[0])
+                                if (courseCmBx.SelectedItem == null || delimitedFileName[2] == courseCmBx.SelectedItem.ToString().Trim())
                                 {
                                     if (sectionCmBx.SelectedItem == null || delimitedFileName[3].Split('.')[0] == sectionCmBx.SelectedItem.ToString())
                                     {
@@ -66,24 +68,32 @@ namespace ExcelAssessmentIntegration
         }
 
         //a method which loads startup.xml which houses the contents of each filter dropdown
-        private void startupXMLLoad()
+        private void criteriaXMLLoad()
         {
-            XElement element = null;
+            XElement xmlDoc = null;
             int maxYear = 0;
             int maxSection = 0;
-            List<KeyValuePair<int, string>> year = new List<KeyValuePair<int, string>>();
-            List<KeyValuePair<int, string>> semesters = new List<KeyValuePair<int, string>>();
-            List<KeyValuePair<int, string>> courses = new List<KeyValuePair<int, string>>();
-            List<KeyValuePair<int, string>> section = new List<KeyValuePair<int, string>>();
             try
             {
-                element = XElement.Load("..\\startup.xml");
-                year.AddRange((from elem in element.Descendants("year") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
-                semesters.AddRange((from elem in element.Descendants("semester") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
-                courses.AddRange((from elem in element.Descendants("course") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
-                section.AddRange((from elem in element.Descendants("section") select new KeyValuePair<int, string>((int)elem.Attribute("key"), (string)elem.Attribute("value"))));
-                Int32.TryParse(year.ElementAt(0).Value, out maxYear);
-                Int32.TryParse(section.ElementAt(0).Value, out maxSection);
+                xmlDoc = XElement.Load("..\\criteria.xml");
+                var year = (from elem in xmlDoc.Elements("maxYear").Elements("year") select elem.Value);
+                var semesters = (from elem in xmlDoc.Elements("semesters").Elements("semester") select elem.Value);
+                var courses = (from elem in xmlDoc.Elements("courses").Elements("course") select elem.Value);
+                var section = (from elem in xmlDoc.Elements("maxSection").Elements("section") select elem.Value);
+                Int32.TryParse(year.ElementAt(0).ToString(), out maxYear);
+                Int32.TryParse(section.ElementAt(0).ToString(), out maxSection);
+
+                //load the semesters combo box based on the semesters provided
+                foreach (string parse in semesters)
+                {
+                    semesterCmBx.Items.Add(parse);
+                }
+
+                //load the courses combo box based on the courses provided
+                foreach (string parse in courses)
+                {
+                    courseCmBx.Items.Add(parse);
+                }
             }
             catch (FileNotFoundException ex)
             {
@@ -97,24 +107,23 @@ namespace ExcelAssessmentIntegration
             {
                 yearCmBx.Items.Add((i - 2000).ToString("00"));
             }
-            //load the semesters combo box based on the semesters provided
-            semesterCmBx.DataSource = semesters;
-            semesterCmBx.ValueMember = "Key";
-            semesterCmBx.DisplayMember = "Value";
-            //load the courses combo box based on the courses provided
-            courseCmBx.DataSource = courses;
-            courseCmBx.ValueMember = "Key";
-            courseCmBx.DisplayMember = "Value";
+
             //load the sections combo box based on the max section provided
             for (int i = 1; i <= maxSection; i++)
             {
                 sectionCmBx.Items.Add((i).ToString());
             }
+
             //makes sure selected items are blank at initialization
             yearCmBx.SelectedItem = null;
             semesterCmBx.SelectedItem = null;
             courseCmBx.SelectedItem = null;
             semesterCmBx.SelectedItem = null;
+        }
+
+        private void objectiveXMLLoad()
+        {
+            
         }
 
         private void AddSheetBtn_Click(object sender, EventArgs e) //add a sheet to the selected listbox
@@ -191,11 +200,11 @@ namespace ExcelAssessmentIntegration
             yearCmBx.SelectedItem = null;
             semesterCmBx.SelectedItem = null;
             courseCmBx.SelectedItem = null;
-            semesterCmBx.SelectedItem = null;
+            sectionCmBx.SelectedItem = null;
 
             foreach (FileInfo file in Files)
             {
-                if (!selectedFilesLBx.Items.Contains(file.Name)) //make sure if already selected it doesnt go into the files box
+                if (!selectedFilesLBx.Items.Contains(file.Name) && !filesLBx.Items.Contains(file.Name)) //make sure if already selected it doesnt go into the files box
                 {
                     delimitedFileName = file.Name.Split('_');
                     if (delimitedFileName.Length == FILENAMEDELIMITEDLENGTH)
