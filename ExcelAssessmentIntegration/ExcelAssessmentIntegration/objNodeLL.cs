@@ -11,6 +11,11 @@ namespace ExcelAssessmentIntegration
         private objNode head;
         private objNode tail;
 
+        public objNodeLL()
+        {
+
+        }
+
         public objNode getHead()
         {
             return head;

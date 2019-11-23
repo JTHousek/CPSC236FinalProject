@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <objectives>
-	<PSCT>
+	<PSCT fields="5">
 		<!-- Problem Solving and Critical Thinking -->
 		<PSCTa>
 			<courseObj>CPSC146-obj1</courseObj>
@@ -32,7 +32,7 @@
 			<courseObj>CPSC323-obj1</courseObj>
 		</PSCTe>
 	</PSCT>
-	<CIS>
+	<CIS fields="4">
 		<!-- Communication and Interpersonal Skills -->
 		<CISa>
 			<courseObj>CPSC130-obj2</courseObj>
@@ -59,8 +59,8 @@
 			<courseObj>CPSC488-obj5</courseObj>
 		</CISd>
 	</CIS>
-	<EPR>
-		<!-- Ethical and Professioonal Responsibilities -->
+	<EPR fields="5">
+		<!-- Ethical and Professional Responsibilities -->
 		<EPRa>
 			<courseObj>CPSC130-obj3</courseObj>
 			<courseObj>CPSC300-obj4</courseObj>
@@ -88,7 +88,7 @@
 			<courseObj>CPSC423-obj4</courseObj>
 		</EPRe>
 	</EPR>
-	<DPWC>
+	<DPWC fields="1">
 		<!-- Degree Program Writing Competency -->
 		<DPWCa>
 			<courseObj>CPSC300-obj1</courseObj>

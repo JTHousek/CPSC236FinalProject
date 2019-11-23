@@ -12,17 +12,18 @@ namespace ExcelAssessmentIntegration
         private double students;
         private double maxScore;
         private double actualScore;
+        private List<string> courseObjs = new List<string>();
         private objNode nextObjNode;
 
         public objNode()
         {
             objective = null;
             students = 0.0;
-            maxScore = 0.0;
+            maxScore = 0.1; //base set to 0.1 so division by zero does not occur
             actualScore = 0.0;
         }
 
-        public objNode(string objective, double students, double maxScore, double actualScore )
+        public objNode(string objective, double students, double maxScore, double actualScore)
         {
             this.objective = objective;
             this.students = students;
@@ -68,6 +69,16 @@ namespace ExcelAssessmentIntegration
         public double getActualScore()
         {
             return actualScore;
+        }
+
+        public void addCourseObj(string newCourseObj)
+        {
+            courseObjs.Add(newCourseObj);
+        }
+
+        public List<string> getCourseObj()
+        {
+            return courseObjs;
         }
 
         public void setNextObjNode(objNode nextObjNode)
