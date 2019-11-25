@@ -332,7 +332,6 @@ namespace ExcelAssessmentIntegration
             Excel.Worksheet excelWorksheet; //open a new worksheet
 
             excelApp = new Excel.Application(); //create the new application
-            
             Excel.Range range;  //range variable
 
             //get the current file path
@@ -433,14 +432,13 @@ namespace ExcelAssessmentIntegration
         //the method tied to the Read Excel Sheets button that does most of the processing
         private void ReadExcelBtn_Click(object sender, EventArgs e)
         {
-            //this needs to make sure there isn't one already open FUCK FUCK FUCK FUCK FUCK
-
             foreach (string item in selectedFilesLBx.Items) //for each file in the selected list of files
             {
                 readExcelSheet(item); //read in the file to the linked list
             }
 
             displayObjectives(); //display the output at the end in a new excel sheet
+            objectiveList.clearObjLL(); //clears the existing values so the list can be reused
         }
 
         //method which fires when cancel is clicked, closing the window

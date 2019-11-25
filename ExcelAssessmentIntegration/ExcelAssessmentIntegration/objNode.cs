@@ -45,6 +45,12 @@ namespace ExcelAssessmentIntegration
             weightedAverage = weightedAverage / totalStudents;
         }
 
+        //set the weighted average of the entire super objective
+        public void setWeightedAverage(double weightedAverage)
+        {
+            this.weightedAverage = weightedAverage;
+        }
+
         //returns the weighted average
         public double getWeightedAverage()
         {
@@ -81,6 +87,12 @@ namespace ExcelAssessmentIntegration
             students.Add(newStudents);
         }
 
+        //removes all course objectives' number of students
+        public void clearStudents()
+        {
+            students.Clear();
+        }
+
         //returns the list of course objectives' number of students
         public List<int> getStudents()
         {
@@ -91,6 +103,12 @@ namespace ExcelAssessmentIntegration
         public void addAverage(double newAverage)
         {
             average.Add(newAverage);
+        }
+
+        //removes all course objectives' averages
+        public void clearAverage()
+        {
+            average.Clear();
         }
 
         //returns the list of course objectives' averages
