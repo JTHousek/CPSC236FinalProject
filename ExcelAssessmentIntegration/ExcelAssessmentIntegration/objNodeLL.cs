@@ -19,6 +19,21 @@ namespace ExcelAssessmentIntegration
             tail = null;
         }
 
+        //clear all the values in the current linked list
+        public void clearObjLL()
+        {
+            objNode currNode = head; //used to iterate through the linked list'
+            while (currNode != null)
+            {
+                currNode.clearAverage();
+                currNode.clearStudents();
+                currNode.setTotalStudents(0);
+                currNode.setWeightedAverage(0.0);
+                currNode = currNode.getNextObjNode();
+            }
+
+        }
+
         //returns the head of the list
         public objNode getHead()
         {
